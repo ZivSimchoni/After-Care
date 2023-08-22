@@ -1,0 +1,98 @@
+﻿<Page
+    x:Class="After_Care.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+
+    <Grid x:Name="ContentArea">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Margin="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+        </Grid>
+
+        <Grid x:Name="DeviceDetails" Grid.Row="1" ColumnSpacing="30" RowSpacing="12"
+          VerticalAlignment="Top" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="VerticalAlignment" Value="Stretch" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="FontSize" Value="15" />
+                </Style>
+            </Grid.Resources>
+
+            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="Model:"></TextBlock>
+            <TextBox Name="textDeviceModel" Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceModel.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Left" Text="Code Name:"></TextBlock>
+            <TextBox Name="textDeviceName" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceName.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock Grid.Column="0" Grid.Row="2"  HorizontalAlignment="Left" Text="Device's Architecture:"></TextBlock>
+            <TextBox Name="textDeviceArchitecture" AutomationProperties.Name="simple ToggleSwitch" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceArchitecture.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+            <TextBlock Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Left" Text="Choose APK/s Folder:"></TextBlock>
+            <TextBlock Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Right" Margin="10,-10" Text="Only Selected Folder"></TextBlock>
+            <ToggleSwitch AutomationProperties.Name="simple ToggleSwitch" x:Name="dark_switch" IsEnabled="True" Grid.Column="1" Grid.Row="4" CornerRadius="3" VerticalAlignment="Center"  HorizontalAlignment="Right" MinWidth="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Button x:Name="PickFolderButton" Content="Open a folder" Click="PickFolderButton_Click"  Grid.Column="1" Grid.Row="3"/>
+            <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="0" Grid.Row="4">
+                <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5">
+            <!--TODO: Add Scroll Viewer-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <TextBlock x:Name="textApkFilesName" Text="Apk Files" Grid.Row="0" Grid.Column="1" Padding="20"></TextBlock>
+
+            <CheckBox x:Name="OptionsAllCheckBox" Content="Select all" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" Grid.Row="4" Grid.Column="0">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <AppBarSeparator Grid.Column="1" Grid.Row="2" Height="Auto" Width="Auto" Margin="10,10" Padding="20"/>
+            <Button Background="Green" Grid.Row="4" Grid.Column="2" Content="Install"/>
+        </Grid>
+
+
+    </Grid>
+</Page>

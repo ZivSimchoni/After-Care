@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "After Care (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "After Care (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
