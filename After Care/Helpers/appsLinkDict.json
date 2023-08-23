@@ -35,14 +35,18 @@
         "fairmail": "M66B/FairEmail/releases/latest/",
         "standardnotes": "standardnotes/app/releases/latest/",
         "droidify": "Droid-ify/client/releases/latest",
-        "adaway": "AdAway/AdAway/releases/latest"
+        "adaway": "AdAway/AdAway/releases/latest",
+        "rethink": "celzero/rethink-app/releases/latest"
       }
     },
     {
       "name": "F-Droid",
       "url": "https://f-droid.org/",
       "apps": {
-        "fdroid": "https://f-droid.org/F-Droid.apk"
+        "fdroid": "https://f-droid.org/F-Droid.apk",
+        "scrambledeggs": "packages/com.jarsilio.android.scrambledeggsif/",
+        "infreddit": "packages/ml.docilealligator.infinityforreddit/",
+        "qrcode": "packages/com.example.barcodescanner/"
       }
     }
   ]
