@@ -4,7 +4,7 @@
       "name": "ApkMirror",
       "url": "https://www.apkmirror.com/",
       "apps": {
-        "waze": "pk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
+        "waze": "apk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
         "chrome": "apk/google-inc/chrome/",
         "firefox": "apk/mozilla/firefox/",
         "brave": "apk/brave-software/brave-browser/",

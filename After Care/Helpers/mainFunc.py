@@ -4,43 +4,48 @@ from selenium.webdriver.chrome.options import Options
 import time
 import requests
 import os
+import json
 
-
+#jsonFile = json.load("appsLinkDict.json")
+with open('appsLinkDict.json', 'r') as f:
+  data = json.load(f)
 websiteScrape = 'https://www.apkmirror.com/'
-appLinkDict = {'waze':'apk/waze/waze-gps-maps-traffic-alerts-live-navigation/',
-               'chrome':'apk/google-inc/chrome/',
-               'firefox':'apk/mozilla/firefox/',
-               'brave':'apk/brave-software/brave-browser/',
-               'kiwi':'apk/geometry-ou/kiwi-browser-fast-quiet/',
-               'netguard':'apk/marcel-bokhorst/netguard-no-root-firewall/',
-               'afwall':'apk/portgenix/afwall-android-firewall/',
-               'k9':'apk/k-9-dog-walkers/k-9-mail/',
-               'docs':'apk/google-inc/docs/',
-               'sheets':'apk/google-inc/sheets/',
-               'maps':'apk/google-inc/sheets/',
-                'moovit':'apk/moovit/moovit-bus-train-live-info/',
-               'facebook':'apk/facebook-2/facebook/',
-                'IG':'apk/instagram/instagram-instagram/',
-               'poweramp':'apk/max-mp/poweramp/',
-                'vlc':'apk/videolabs/vlc/',
-               'mega':'apk/mega-ltd/mega-official/',
-               'youtube':'apk/google-inc/youtube/',
-               'whatsapp':'apk/whatsapp-inc/whatsapp/',
-               'telegram': 'apk/telegram-fz-llc/telegram/',
-               'discord': 'apk/discord-inc/discord-chat-for-gamers/',
-               'steam': 'apk/valve-corporation/',
-               '': '',
-               '': '',
-               '': '',
-
-
-
-
-}
+# appLinkDict = {'waze':'apk/waze/waze-gps-maps-traffic-alerts-live-navigation/',
+#                'chrome':'apk/google-inc/chrome/',
+#                'firefox':'apk/mozilla/firefox/',
+#                'brave':'apk/brave-software/brave-browser/',
+#                'kiwi':'apk/geometry-ou/kiwi-browser-fast-quiet/',
+#                'netguard':'apk/marcel-bokhorst/netguard-no-root-firewall/',
+#                'afwall':'apk/portgenix/afwall-android-firewall/',
+#                'k9':'apk/k-9-dog-walkers/k-9-mail/',
+#                'docs':'apk/google-inc/docs/',
+#                'sheets':'apk/google-inc/sheets/',
+#                'maps':'apk/google-inc/sheets/',
+#                 'moovit':'apk/moovit/moovit-bus-train-live-info/',
+#                'facebook':'apk/facebook-2/facebook/',
+#                 'IG':'apk/instagram/instagram-instagram/',
+#                'poweramp':'apk/max-mp/poweramp/',
+#                 'vlc':'apk/videolabs/vlc/',
+#                'mega':'apk/mega-ltd/mega-official/',
+#                'youtube':'apk/google-inc/youtube/',
+#                'whatsapp':'apk/whatsapp-inc/whatsapp/',
+#                'telegram': 'apk/telegram-fz-llc/telegram/',
+#                'discord': 'apk/discord-inc/discord-chat-for-gamers/',
+#                'steam': 'apk/valve-corporation/',
+#                '': '',
+#                '': '',
+#                '': '',
+#
+#
+#
+#
+# }
 
 def mainScrape(listOfApps,beta):
     for App in listOfApps:
-        downloadAPK(appLinkDict[App],beta)
+        downloadWebSite,downloadLink = searchForApp(App)
+        if downloadWebSite == 'https://www.apkmirror.com/':
+            downloadAPK(downloadWebSite + downloadLink,beta)
 
 
 
@@ -65,7 +70,7 @@ def downloadAPK(downloadLink,beta):
     driver = webdriver.Chrome(options=options)
 
 
-    driver.get(websiteScrape + downloadLink)
+    driver.get(downloadLink)
     seleniumUserAgent = driver.execute_script("return navigator.userAgent")
     page_height = driver.execute_script("return document.body.scrollHeight")
     driver.execute_script(f"window.scrollTo(0, {page_height / 5});")
@@ -106,13 +111,20 @@ def downloadAPK(downloadLink,beta):
     response = session.get(downloadlink)
     #check if response is succeful and only then continue
     latest_download = max(os.listdir(download_dir), key=lambda x: os.path.getctime(os.path.join(download_dir, x)))
-    local_file_path = "apks/" + fileNameVersion
+    local_file_path = "apks/" + fileNameVersion + ".apk"
     with open(local_file_path, 'wb') as file:
         file.write(response.content)
     os.remove(os.path.join(download_dir ,latest_download))
     print('succefully downloaded ' + fileNameVersion)
     # Close the WebDriver session when done
     driver.quit()
+
+def searchForApp(nameOfApp):
+    for website in data['websites']:
+        if website['apps'][nameOfApp]:
+            return website['url'],website['apps'][nameOfApp]
+
+
 
 
 if __name__ == "__main__":
