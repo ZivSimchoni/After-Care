@@ -1,0 +1,49 @@
+{
+  "websites": [
+    {
+      "name": "ApkMirror",
+      "url": "https://www.apkmirror.com/",
+      "apps": {
+        "waze": "pk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
+        "chrome": "apk/google-inc/chrome/",
+        "firefox": "apk/mozilla/firefox/",
+        "brave": "apk/brave-software/brave-browser/",
+        "kiwi": "apk/geometry-ou/kiwi-browser-fast-quiet/",
+        "netguard": "apk/marcel-bokhorst/netguard-no-root-firewall/",
+        "afwall": "apk/portgenix/afwall-android-firewall/",
+        "k9": "apk/k-9-dog-walkers/k-9-mail/",
+        "docs": "apk/google-inc/docs/",
+        "sheets": "apk/google-inc/sheets/",
+        "maps": "apk/google-inc/sheets/",
+        "moovit": "apk/moovit/moovit-bus-train-live-info/",
+        "facebook": "apk/facebook-2/facebook/",
+        "IG": "apk/instagram/instagram-instagram/",
+        "poweramp": "apk/max-mp/poweramp/",
+        "vlc": "apk/videolabs/vlc/",
+        "mega": "apk/mega-ltd/mega-official/",
+        "youtube": "apk/google-inc/youtube/",
+        "whatsapp": "apk/whatsapp-inc/whatsapp/",
+        "telegram": "apk/telegram-fz-llc/telegram/",
+        "discord": "apk/discord-inc/discord-chat-for-gamers/",
+        "steam": "apk/valve-corporation/"
+      }
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/",
+      "apps": {
+        "fairmail": "M66B/FairEmail/releases/latest/",
+        "standardnotes": "standardnotes/app/releases/latest/",
+        "droidify": "Droid-ify/client/releases/latest",
+        "adaway": "AdAway/AdAway/releases/latest"
+      }
+    },
+    {
+      "name": "F-Droid",
+      "url": "https://f-droid.org/",
+      "apps": {
+        "fdroid": "https://f-droid.org/F-Droid.apk"
+      }
+    }
+  ]
+}
