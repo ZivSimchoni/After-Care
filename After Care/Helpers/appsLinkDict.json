@@ -36,17 +36,35 @@
         "standardnotes": "standardnotes/app/releases/latest/",
         "droidify": "Droid-ify/client/releases/latest",
         "adaway": "AdAway/AdAway/releases/latest",
-        "rethink": "celzero/rethink-app/releases/latest"
+        "rethink": "celzero/rethink-app/releases/latest",
+        "saikou": "saikou-app/saikou/releases/latest",
+        "vimusic": "vfsfitvnm/ViMusic/releases/latest",
+        "newpipexsponserblock": "polymorphicshade/NewPipe/releases/latest" // if thats easier for you use this link https://apt.izzysoft.de/fdroid/index/apk/org.polymorphicshade.newpipe
       }
     },
     {
       "name": "F-Droid",
       "url": "https://f-droid.org/",
       "apps": {
-        "fdroid": "https://f-droid.org/F-Droid.apk",
+        "fdroid": "F-Droid.apk",
+        "aurorastore": "packages/com.aurora.store/",
+        "auroradroid": "packages/com.aurora.adroid/",
         "scrambledeggs": "packages/com.jarsilio.android.scrambledeggsif/",
         "infreddit": "packages/ml.docilealligator.infinityforreddit/",
-        "qrcode": "packages/com.example.barcodescanner/"
+        "qrcode": "packages/com.example.barcodescanner/",
+        "syncthing": "packages/com.nutomic.syncthingandroid/",
+        "newpipe": "packages/org.schabi.newpipe/"
+      }
+    },
+    {
+      "name": "Others",
+      "url": null,
+      "apps": {
+        "thedise": "https://thedise.me/instander/repo/",
+        "aniyomi": "https://aniyomi.org/download/",
+        "tachiyomi": "https://tachiyomi.org/download/",
+        "moelist": "https://apt.izzysoft.de/fdroid/index/apk/com.axiel7.moelist",
+        "sdmaidse": "https://apt.izzysoft.de/fdroid/index/apk/eu.darken.sdmse/"
       }
     }
   ]
