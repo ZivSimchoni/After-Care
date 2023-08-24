@@ -149,4 +149,5 @@ public sealed partial class MainPage : Page
         SetCheckedState();
     }
     #endregion
+
 }

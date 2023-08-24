@@ -78,10 +78,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <!-- Local Apps to Install -->
             <TextBlock x:Name="textApkFilesName" Text="Apk Files" Grid.Row="0" Grid.Column="1" Padding="20"></TextBlock>
-
             <CheckBox x:Name="OptionsAllCheckBox" Content="Select all" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
-            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" Grid.Row="4" Grid.Column="0">
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="CheckBox">
                         <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
@@ -90,9 +90,35 @@
             </ListView>
 
             <AppBarSeparator Grid.Column="1" Grid.Row="2" Height="Auto" Width="Auto" Margin="10,10" Padding="20"/>
-            <Button Background="Green" Grid.Row="4" Grid.Column="2" Content="Install"/>
+            <Button Background="Green" Grid.Row="4" Grid.Column="1" Content="Install"/>
         </Grid>
 
+        <!-- Remote Apps to Install -->
+        <!--<CheckBox x:Name="OptionsAllCheckBoxRemote" Content="Select all Remote" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
+        <ListView ItemsSource="{x:Bind ViewModel.ApkFilesRemote}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="CheckBox">
+                    <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
+        <CheckBox x:Name="OptionsAllCheckBoxRemote" Content="Select all Remote" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" IsChecked="False"></CheckBox>
+        <ListView Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesCategoryRemote}" >
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="TextBlock">
+                    <TextBlock Name="{x:Bind Name}" Text="{x:Bind Text}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListView ItemsSource="{x:Bind ViewModel.ApkFilesRemote}">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="CheckBox">
+                    <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        </ListView>
 
     </Grid>
 </Page>
