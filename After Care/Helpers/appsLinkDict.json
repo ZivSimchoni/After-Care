@@ -1,41 +1,61 @@
 {
-  "waze": "https://www.apkmirror.com/pk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
-  "firefox": "https://www.apkmirror.com/apk/mozilla/firefox/",
-  "brave": "https://www.apkmirror.com/apk/brave-software/brave-browser/",
-  "kiwi": "https://www.apkmirror.com/apk/geometry-ou/kiwi-browser-fast-quiet/",
-  "afwall": "https://www.apkmirror.com/apk/portgenix/afwall-android-firewall/",
-  "k9": "https://www.apkmirror.com/apk/k-9-dog-walkers/k-9-mail/",
-  "docs": "https://www.apkmirror.com/apk/google-inc/docs/",
-  "sheets": "https://www.apkmirror.com/apk/google-inc/sheets/",
-  "moovit": "https://www.apkmirror.com/apk/moovit/moovit-bus-train-live-info/",
-  "poweramp": "https://www.apkmirror.com/apk/max-mp/poweramp/",
-  "vlc": "https://www.apkmirror.com/apk/videolabs/vlc/",
-  "mega": "https://www.apkmirror.com/apk/mega-ltd/mega-official/",
-  "youtube": "https://www.apkmirror.com/apk/google-inc/youtube/",
-  "whatsapp": "https://www.apkmirror.com/apk/whatsapp-inc/whatsapp/",
-  "telegram": "https://www.apkmirror.com/apk/telegram-fz-llc/telegram/",
-  "discord": "https://www.apkmirror.com/apk/discord-inc/discord-chat-for-gamers/",
-  "steam": "https://www.apkmirror.com/apk/valve-corporation/",
-  "fairmail": "https://github.com/M66B/FairEmail/releases/latest/",
-  "netguard": "https://github.com/M66B/NetGuard/releases/latest",
-  "droidify": "https://github.com/Droid-ify/client/releases/latest",
-  "adaway": "https://github.com/AdAway/AdAway/releases/latest",
-  "rethink": "https://github.com/celzero/rethink-app/releases/latest",
-  "saikou": "https://github.com/saikou-app/saikou/releases/latest",
-  "vimusic": "https://github.com/vfsfitvnm/ViMusic/releases/latest",
-  "newpipexsponserblock": "https://github.com/polymorphicshade/NewPipe/releases/latest",
-  "fdroid": "https://f-droid.org/F-Droid.apk",
-  "aurorastore": "https://f-droid.org/packages/com.aurora.store/",
-  "auroradroid": "https://f-droid.org/packages/com.aurora.adroid/",
-  "scrambledeggsif": "https://f-droid.org/packages/com.jarsilio.android.scrambledeggsif/",
-  "newpipe": "https://f-droid.org/packages/org.schabi.newpipe/",
-  "mull": "https://f-droid.org/en/packages/us.spotco.fennec_dos/",
-  "infreddit": "https://f-droid.org/packages/ml.docilealligator.infinityforreddit/",
-  "qrcode": "https://f-droid.org/packages/com.example.barcodescanner/",
-  "syncthing": "https://f-droid.org/packages/com.nutomic.syncthingandroid/",
-  "thediseinstagrammode": "https://thedise.me/instander/repo/",
-  "aniyomi": "https://aniyomi.org/download/",
-  "tachiyomi": "https://tachiyomi.org/download/",
-  "moelist": "https://apt.izzysoft.de/fdroid/index/apk/com.axiel7.moelist",
-  "sdmaidse": "https://apt.izzysoft.de/fdroid/index/apk/eu.darken.sdmse/"
+  "Web Browsers": {
+    "Firefox": "https://www.apkmirror.com/apk/mozilla/firefox/",
+    "Mull": "https://f-droid.org/en/packages/us.spotco.fennec_dos/",
+    "Brave": "https://www.apkmirror.com/apk/brave-software/brave-browser/",
+    "Kiwi": "https://www.apkmirror.com/apk/geometry-ou/kiwi-browser-fast-quiet/"
+  },
+  "Email Clients": {
+    "FairMail": "https://github.com/M66B/FairEmail/releases/latest/",
+    "K9": "https://www.apkmirror.com/apk/k-9-dog-walkers/k-9-mail/"
+  },
+  "Files": {
+    "Google Docs": "https://www.apkmirror.com/apk/google-inc/docs/",
+    "Google Sheets": "https://www.apkmirror.com/apk/google-inc/sheets/",
+    "SD Maid SE": "https://apt.izzysoft.de/fdroid/index/apk/eu.darken.sdmse/",
+    "MEGA": "https://www.apkmirror.com/apk/mega-ltd/mega-official/"
+  },
+  "Navigation": {
+    "Waze": "https://www.apkmirror.com/pk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
+    "Moovit": "https://www.apkmirror.com/apk/moovit/moovit-bus-train-live-info/"
+  },
+  "Media": {
+    "Youtube": "https://www.apkmirror.com/apk/google-inc/youtube/",
+    "NewPipe": "https://f-droid.org/packages/org.schabi.newpipe/",
+    "NewPipe x Sponserblock": "https://github.com/polymorphicshade/NewPipe/releases/latest",
+    "ViMusic": "https://github.com/vfsfitvnm/ViMusic/releases/latest",
+    "PowerAMP": "https://www.apkmirror.com/apk/max-mp/poweramp/",
+    "VLC": "https://www.apkmirror.com/apk/videolabs/vlc/"
+  },
+  "Social": {
+    "Whatsapp": "https://www.apkmirror.com/apk/whatsapp-inc/whatsapp/",
+    "Infinity For Reddit": "https://f-droid.org/packages/ml.docilealligator.infinityforreddit/",
+    "Telegram": "https://www.apkmirror.com/apk/telegram-fz-llc/telegram/",
+    "Discord": "https://www.apkmirror.com/apk/discord-inc/discord-chat-for-gamers/",
+    "The Dise Instagram Mode": "https://thedise.me/instander/repo/"
+  },
+  "Network & Ad Blockers": {
+    "AF Wall": "https://www.apkmirror.com/apk/portgenix/afwall-android-firewall/",
+    "Netguard": "https://github.com/M66B/NetGuard/releases/latest",
+    "AdAway": "https://github.com/AdAway/AdAway/releases/latest",
+    "ReThink": "https://github.com/celzero/rethink-app/releases/latest"
+  },
+  "Utilites": {
+    "Scramblede eggsif": "https://f-droid.org/packages/com.jarsilio.android.scrambledeggsif/",
+    "QR Code": "https://f-droid.org/packages/com.example.barcodescanner/",
+    "Steam": "https://www.apkmirror.com/apk/valve-corporation/",
+    "Syncthing": "https://f-droid.org/packages/com.nutomic.syncthingandroid/"
+  },
+  "Alternative Stores": {
+    "F-Droid": "https://f-droid.org/F-Droid.apk",
+    "Droid-Ify": "https://github.com/Droid-ify/client/releases/latest",
+    "Aurora Store": "https://f-droid.org/packages/com.aurora.store/",
+    "Aurora Droid": "https://f-droid.org/packages/com.aurora.adroid/"
+  },
+  "Anime": {
+    "Aniyomi": "https://aniyomi.org/download/",
+    "Tachiyomi": "https://tachiyomi.org/download/",
+    "Moelist": "https://apt.izzysoft.de/fdroid/index/apk/com.axiel7.moelist",
+    "Saikou": "https://github.com/saikou-app/saikou/releases/latest"
+  }
 }
