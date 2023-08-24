@@ -2,29 +2,29 @@
   "Web Browsers": {
     "Firefox": {
       "url": "https://www.apkmirror.com/apk/mozilla/firefox/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2020%2F06%2F96%2F5ef58a52bb339.png&w=96&h=96&q=100",
       "Description": "firefox is an open-source web browser that is fast and private."
     },
     "Mull": {
       "url": "https://f-droid.org/en/packages/us.spotco.fennec_dos/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/assets/ic_repo_app_default_KNN008Z2K7VNPZOFLMTry3JkfFYPxVGDopS1iwWe5wo=.png",
       "Description": "Firefox fork with privacy enhancements."
     },
     "Brave": {
       "url": "https://www.apkmirror.com/apk/brave-software/brave-browser/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2022%2F03%2F41%2F623bb89f6eb05.png&w=96&h=96&q=100",
       "Description": "Brave is a web browser that is fast and private."
     },
     "Kiwi": {
       "url": "https://www.apkmirror.com/apk/geometry-ou/kiwi-browser-fast-quiet/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5d1486447c9fa.png&w=96&h=96&q=100",
       "Description": "Kiwi is based on Chromium with many features."
     }
   },
   "Email Clients": {
     "ProtonMail": {
       "url": "https://www.apkmirror.com/apk/proton-technologies-ag/protonmail-encrypted-email/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F07%2F37%2F64c0f62c0f114_ch.protonmail.android.png&w=96&h=96&q=100",
       "Description": "Proton Mail is an end-to-end encrypted email service."
     },
     "FairMail": {
@@ -34,24 +34,24 @@
     },
     "K9": {
       "url": "https://www.apkmirror.com/apk/k-9-dog-walkers/k-9-mail/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F07%2F10%2F60f9e3788b9f6.png&w=96&h=96&q=100",
       "Description": "K-9 Mail is free and open source email client for Android."
     }
   },
   "Files": {
     "Mixplorer": {
       "url": "https://www.apkmirror.com/apk/hootan-parsa/mixplorer-hootanparsa/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F04%2FMiXplorer_round.png&w=96&h=96&q=100",
       "Description": "MiXplorer is the best Android file explorer."
     },
     "Google Docs": {
       "url": "https://www.apkmirror.com/apk/google-inc/docs/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F05%2F60%2F60aef69fb25a7.png&w=96&h=96&q=100",
       "Description": "Google Docs is an online word processor."
     },
     "Google Sheets": {
       "url": "https://www.apkmirror.com/apk/google-inc/sheets/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F05%2F47%2F60aefbb049fa3.png&w=96&h=96&q=100",
       "Description": "Google Sheets is an online spreadsheet application."
     },
     "SD Maid SE": {
@@ -61,31 +61,31 @@
     },
     "MEGA": {
       "url": "https://www.apkmirror.com/apk/mega-ltd/mega-official/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2020%2F02%2F5e533830874ce.png&w=96&h=96&q=100",
       "Description": "MEGA is a cloud storage and file hosting service."
     }
   },
   "Navigation": {
     "Waze": {
-      "url": "https://www.apkmirror.com/pk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
-      "icon": "URL",
+      "url": "https://www.apkmirror.com/apk/waze/waze-gps-maps-traffic-alerts-live-navigation/",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2020%2F09%2F99%2F5f52d1d23cd6a.png&w=96&h=96&q=100",
       "Description": "Waze is a community driven navigation app."
     },
     "Moovit": {
       "url": "https://www.apkmirror.com/apk/moovit/moovit-bus-train-live-info/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F07%2F68%2F64b635c4ea7d2_com.tranzmate.png&w=96&h=96&q=100",
       "Description": "Moovit is a mobility as a service provider and journey planner app."
     }
   },
   "Media": {
     "Youtube": {
       "url": "https://www.apkmirror.com/apk/google-inc/youtube/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F03%2F5c8308e836b90.png&w=96&h=96&q=100",
       "Description": "Youtube is an online video sharing and social media platform."
     },
     "NewPipe": {
       "url": "https://f-droid.org/packages/org.schabi.newpipe/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/org.schabi.newpipe/en-US/icon_OHy4y1W-fJCNhHHOBCM9V_cxZNJJgbcNkB-x7UDTY9Q=.png",
       "Description": "An intuitive, feature-rich and privacy friendly app for YouTube."
     },
     "NewPipe x Sponserblock": {
@@ -100,34 +100,34 @@
     },
     "Poweramp": {
       "url": "https://www.apkmirror.com/apk/max-mp/poweramp/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2022%2F04%2F92%2F625a69079a03b.png&w=96&h=96&q=100",
       "Description": "Poweramp is a powerful music player for Android."
     },
     "VLC": {
       "url": "https://www.apkmirror.com/apk/videolabs/vlc/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F02%2F82%2F63f3f65c178b8.png&w=96&h=96&q=100",
       "Description": "VLC is FOSS cross-platform multimedia player and framework."
     }
   },
   "Social": {
     "Whatsapp": {
       "url": "https://www.apkmirror.com/apk/whatsapp-inc/whatsapp/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5cf95ae8c3143.png&w=96&h=96&q=100",
       "Description": "WhatsApp is a centralized instant messaging application."
     },
     "Infinity For Reddit": {
       "url": "https://f-droid.org/packages/ml.docilealligator.infinityforreddit/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/ml.docilealligator.infinityforreddit/en-US/icon_k3rHUumkceuBhQzl7CBHaIMfJn_o1lRDPP4ldA3I7Zw=.png",
       "Description": "Infinity is a beautiful, feature-rich app that offers a smooth Reddit browsing experience."
     },
     "Telegram": {
       "url": "https://www.apkmirror.com/apk/telegram-fz-llc/telegram/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5cf876afcd188.png&w=96&h=96&q=100",
       "Description": "Telegram is a cloud-based and centralized instant messaging service."
     },
     "Discord": {
       "url": "https://www.apkmirror.com/apk/discord-inc/discord-chat-for-gamers/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F07%2F64%2F60f1dfdd3b8ee.png&w=96&h=96&q=100",
       "Description": "Discord is an instant messaging and VoIP social platform."
     },
     "The Dise Instagram Mode": {
@@ -139,7 +139,7 @@
   "Network & Ad Blockers": {
     "AFWall+": {
       "url": "https://www.apkmirror.com/apk/portgenix/afwall-android-firewall/",
-      "icon": "URL",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2022%2F06%2F81%2F62ba9aae7fc09.png&w=96&h=96&q=100",
       "Description": "AFWall+ is an iptables based firewall for Android."
     },
     "Netguard": {
@@ -161,31 +161,26 @@
   "Utilites": {
     "Scrambled Exif": {
       "url": "https://f-droid.org/packages/com.jarsilio.android.scrambledeggsif/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/com.jarsilio.android.scrambledeggsif/en-US/icon_2KTHUGp64o3--I2azzUSQfh0MKJrC47QLILtvN2luoA=.png",
       "Description": "Remove the metadata from your pictures before sharing them."
     },
     "QR Code": {
       "url": "https://f-droid.org/packages/com.example.barcodescanner/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/com.example.barcodescanner/en-US/icon_gbgkQIJl8HO1zAqDFiUxTHRnzIJbzYBAYFsmrtwC0Us=.png",
       "Description": "QR and barcode scanner with all the features you need. "
     },
     "Steam": {
-      "url": "https://www.apkmirror.com/apk/valve-corporation/",
-      "icon": "URL",
+      "url": "https://www.apkmirror.com/apk/valve-corporation/steam",
+      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F07%2F37%2F64beb8e0f2430_com.valvesoftware.android.steam.community.png&w=96&h=96&q=100",
       "Description": "With the free Steam Mobile App, you can take Steam with you anywhere."
     },
     "Syncthing": {
       "url": "https://f-droid.org/packages/com.nutomic.syncthingandroid/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/assets/ic_repo_app_default_KNN008Z2K7VNPZOFLMTry3JkfFYPxVGDopS1iwWe5wo=.png",
       "Description": "Open, trustworthy and decentralized file synchronization."
     }
   },
   "Alternative Stores": {
-    "F-Droid": {
-      "url": "https://f-droid.org/F-Droid.apk",
-      "icon": "URL",
-      "Description": "F-Droid is an installable catalogue of FOSS applications for the Android platform."
-    },
     "Droid-Ify": {
       "url": "https://github.com/Droid-ify/client/releases/latest",
       "icon": "URL",
@@ -193,12 +188,12 @@
     },
     "Aurora Store": {
       "url": "https://f-droid.org/packages/com.aurora.store/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/com.aurora.store/en-US/icon_tbAhwq51NNd0liZcTg0cQNNvazxrWlj7bPCe_1TkCV8=.png",
       "Description": "An open-source alternative to Google Play Store with privacy and modern design."
     },
     "Aurora Droid": {
       "url": "https://f-droid.org/packages/com.aurora.adroid/",
-      "icon": "URL",
+      "icon": "https://f-droid.org/repo/icons-640/com.aurora.adroid.8.png",
       "Description": "An alternative to the default F-Droid app."
     }
   },

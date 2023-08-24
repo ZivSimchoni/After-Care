@@ -5,6 +5,7 @@ import time
 import requests
 import os
 import json
+import urllib
 
 
 #jsonFile = json.load("appsLinkDict.json")
@@ -64,7 +65,7 @@ def initSelenium():
         "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",
     }
     options = Options()
-    # options.add_argument("--headless")
+    options.add_argument("--headless=new")
     os.getcwd()
 
 
@@ -80,6 +81,7 @@ def initSelenium():
 
 def downloadGitHub(downloadLink):
     driver = initSelenium()
+    driver.manage().timeouts().implicitlyWait()
     driver.get(downloadLink)
     driver.execute_script(f"window.scrollTo(0, 800);")
     time.sleep(1)
@@ -90,16 +92,17 @@ def downloadGitHub(downloadLink):
     saveFile(fileNameVersion,response,driver)
 
 def downloadAPKMirror(downloadLink,beta):
-    driver,download_dir = initSelenium()
+    driver = initSelenium()
 
     driver.get(downloadLink)
     seleniumUserAgent = driver.execute_script("return navigator.userAgent")
     page_height = driver.execute_script("return document.body.scrollHeight")
     driver.execute_script(f"window.scrollTo(0, {page_height / 5});")
-    #time.sleep(1)
-
-    listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
-
+    time.sleep(1)
+    try:
+        listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
+    except:
+        listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
     if (beta):
         listOfAvailVersions[0].click()
     else:
@@ -160,8 +163,32 @@ def saveFile(fileNameVersion,response,driver):
 
 
 
+def getIcons():
+
+    driver = initSelenium()
+    for cat in data:
+        for app in data[cat]:
+            if data[cat][app]['url'].startswith("https://www.apkmirror"):
+                driver.get(data[cat][app]['url'])
+                url = driver.find_element(By.XPATH,"/html/body/div[1]/div/header/div/div/div[1]/img").get_attribute("src")
+                urllib.request.urlretrieve(url,"icons/"  + app + ".png")
+                data[cat][app]["icon"] = url
+                print("downloaded "+ app)
+            if data[cat][app]['url'].startswith("https://f"):
+                driver.get(data[cat][app]['url'])
+                url = driver.find_element(By.XPATH, "/html/body/div/div/div[1]/article/header/img").get_attribute("src")
+                urllib.request.urlretrieve(url,"icons/"  + app + ".png")
+                data[cat][app]["icon"] = url
+                print("downloaded "+ app)
+    #iconjson = json.dumps(dic)
+    with open('data.json', 'w') as json_file:
+        # Write the JSON data to the file
+        json.dump(data, json_file)
+
+
 
 if __name__ == "__main__":
-    listOfApps = ["droidify","vimusic","newpipexsponserblock","adaway","rethink"]
-    beta = True
-    mainScrape(listOfApps, beta)
+    getIcons()
+    # listOfApps = []
+    # beta = True
+    # mainScrape(listOfApps, beta)
