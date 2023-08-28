@@ -8,46 +8,28 @@ import json
 import urllib
 
 
-#jsonFile = json.load("appsLinkDict.json")
 with open('appsLinkDict.json', 'r') as f:
-    data = json.load(f)
+    appsLinkDict = json.load(f)
 download_dir = os.getcwd() + r'\tempks'
-#websiteScrape = 'https://www.apkmirror.com/'
-# appLinkDict = {'waze':'apk/waze/waze-gps-maps-traffic-alerts-live-navigation/',
-#                'chrome':'apk/google-inc/chrome/',
-#                'firefox':'apk/mozilla/firefox/',
-#                'brave':'apk/brave-software/brave-browser/',
-#                'kiwi':'apk/geometry-ou/kiwi-browser-fast-quiet/',
-#                'netguard':'apk/marcel-bokhorst/netguard-no-root-firewall/',
-#                'afwall':'apk/portgenix/afwall-android-firewall/',
-#                'k9':'apk/k-9-dog-walkers/k-9-mail/',
-#                'docs':'apk/google-inc/docs/',
-#                'sheets':'apk/google-inc/sheets/',
-#                'maps':'apk/google-inc/sheets/',
-#                 'moovit':'apk/moovit/moovit-bus-train-live-info/',
-#                'facebook':'apk/facebook-2/facebook/',
-#                 'IG':'apk/instagram/instagram-instagram/',
-#                'poweramp':'apk/max-mp/poweramp/',
-#                 'vlc':'apk/videolabs/vlc/',
-#                'mega':'apk/mega-ltd/mega-official/',
-#                'youtube':'apk/google-inc/youtube/',
-#                'whatsapp':'apk/whatsapp-inc/whatsapp/',
-#                'telegram': 'apk/telegram-fz-llc/telegram/',
-#                'discord': 'apk/discord-inc/discord-chat-for-gamers/',
-#                'steam': 'apk/valve-corporation/',
-#                '': '',
-#                '': '',
-#                '': '',
-#
-#
-#
-#
-# }
+
+
+def searchApp(appName):
+    for category, apps in appsLinkDict.items():
+        for app,details in apps.items():
+            if app == appName:
+                return {
+                    "Category": category,
+                    "App": app,
+                    "URL":details["url"],
+                    "Icon": details["icon"],
+                    "Description": details["Description"]
+                }
+
 
 def mainScrape(listOfApps,beta):
     for App in listOfApps:
         #downloadWebSite,downloadLink = searchForApp(App)
-        download = data[App]
+        download = searchApp(App)["URL"]
         #downloadListTemp = download.split('/')
         #downloadparse = urlparse(download)
         #downloadWebSite =  downloadparse.hostname
@@ -55,6 +37,8 @@ def mainScrape(listOfApps,beta):
             downloadAPKMirror(download,beta)
         elif download.startswith('https://github.com/'):
             downloadGitHub(download)
+        elif download.startswith('https://f-droid.org'):
+            downloadFDroid(download)
 
 
 
@@ -81,7 +65,7 @@ def initSelenium():
 
 def downloadGitHub(downloadLink):
     driver = initSelenium()
-    driver.manage().timeouts().implicitlyWait()
+    #driver.manage().timeouts().implicitlyWait()
     driver.get(downloadLink)
     driver.execute_script(f"window.scrollTo(0, 800);")
     time.sleep(1)
@@ -102,7 +86,12 @@ def downloadAPKMirror(downloadLink,beta):
     try:
         listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
     except:
+        driver.refresh()
+        time.sleep(1)
         listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
+        if len(listOfAvailVersions) == 0:
+            print("unable to find list of version, refreshing and trying again")
+            return downloadAPKMirror(downloadLink,beta)
     if (beta):
         listOfAvailVersions[0].click()
     else:
@@ -162,33 +151,38 @@ def saveFile(fileNameVersion,response,driver):
 #             continue
 
 
-
-def getIcons():
-
+def downloadFDroid(downloadLink):
     driver = initSelenium()
-    for cat in data:
-        for app in data[cat]:
-            if data[cat][app]['url'].startswith("https://www.apkmirror"):
-                driver.get(data[cat][app]['url'])
-                url = driver.find_element(By.XPATH,"/html/body/div[1]/div/header/div/div/div[1]/img").get_attribute("src")
-                urllib.request.urlretrieve(url,"icons/"  + app + ".png")
-                data[cat][app]["icon"] = url
-                print("downloaded "+ app)
-            if data[cat][app]['url'].startswith("https://f"):
-                driver.get(data[cat][app]['url'])
-                url = driver.find_element(By.XPATH, "/html/body/div/div/div[1]/article/header/img").get_attribute("src")
-                urllib.request.urlretrieve(url,"icons/"  + app + ".png")
-                data[cat][app]["icon"] = url
-                print("downloaded "+ app)
-    #iconjson = json.dumps(dic)
-    with open('data.json', 'w') as json_file:
-        # Write the JSON data to the file
-        json.dump(data, json_file)
+    driver.get(downloadLink)
+    if downloadLink == "https://f-droid.org/":
+        downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute("href")
+        appName = "Fdroid"
+        appVersion = 0.0
+    else:
+        downloadHref = driver.find_element(By.CLASS_NAME,"package-version-download").find_element(By.TAG_NAME,"a").get_attribute("href")
+        appName = driver.find_element(By.CLASS_NAME,"package-name").text
+        appVersion = driver.find_element(By.CLASS_NAME,"package-version-header").find_element(By.TAG_NAME, "a").get_attribute("name")
+    session = requests.Session()
+    response = session.get(downloadHref)
+    saveFile(appName + appVersion,response,driver)
 
+
+
+
+
+
+def testing():
+    listOfApps = []
+    for category, apps in appsLinkDict.items():
+        for app, details in apps.items():
+            if details["url"].startswith("https://f-droid.org"):
+                listOfApps.append(app)
+    beta = True
+    mainScrape(listOfApps,beta)
 
 
 if __name__ == "__main__":
-    getIcons()
+    testing()
     # listOfApps = []
-    # beta = True
+    beta = True
     # mainScrape(listOfApps, beta)

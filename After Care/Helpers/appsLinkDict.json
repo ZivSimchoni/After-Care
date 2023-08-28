@@ -193,7 +193,12 @@
       "url": "https://f-droid.org/packages/com.aurora.adroid/",
       "icon": "https://f-droid.org/repo/icons-640/com.aurora.adroid.8.png",
       "Description": "An alternative to the default F-Droid app."
-    }
+    },
+	"F-droid":{
+		"url": "https://f-droid.org/",
+		"icon": "https://f-droid.org/assets/fdroid-logo_bfHl7nsLHOUQxzdU8-rGIhn4bAgl6z7k2mA3fWoCyT4=.png",
+		"Description":"f-droid"
+	}
   },
   "Anime": {
     "Aniyomi": {

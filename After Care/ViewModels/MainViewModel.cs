@@ -229,7 +229,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         //ApkFilesRemote.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
         // Load Json File
         // C:\Users\Ziv S\source\repos\AfterCare\After Care\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX\Helpers\appLinkDict.json
-        var jsonPath = @"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json";
+        var jsonPath = @"C:\Users\eytan\Programminng\Python\After-Care\After Care\Helpers\appsLinkDict.json";
         var json = File.ReadAllText(jsonPath);
         JObject data = JObject.Parse(json);
         //Dictionary<string, Dictionary<string, Dictionary<string, string>>> data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(json);
