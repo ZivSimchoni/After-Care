@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Diagnostics;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -75,19 +75,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             _apkFiles = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFiles)));
         }
-    }
-    // Device Details
-    public TextBlock TextDeviceModel
-    {
-        get; set;
-    }
-    public TextBlock TextDeviceName
-    {
-        get; set;
-    }
-    public TextBlock TextDeviceArchitecture
-    {
-        get; set;
     }
     // Collection of One Category of APK Files
     private ObservableCollection<CheckBox> _apkFilesWebBrowsers;
@@ -215,7 +202,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesAnime)));
         }
     }
-
+    #endregion
 
     public MainViewModel()
     {
@@ -227,7 +214,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         if (_instanceCount == 0)
         {
             var deviceFound = GetDeviceDetails(TextDeviceName, TextDeviceModel, TextDeviceArchitecture);
-            //var deviceFound = false; // TODO: remove later
             if (deviceFound)
             {
                 _instanceCount++;

@@ -1,4 +1,4 @@
-﻿using System.Data;
+using System.Data;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using After_Care.ViewModels;
@@ -41,14 +41,8 @@ public sealed partial class MainPage : Page
 
     private async void MainPage_Loaded(object sender, RoutedEventArgs e)
     {
-        //dark_switch.SetValue(ToggleSwitch.IsOnProperty, true);
+
     }
-
-    //void CheckBoxPage_Loaded(object sender, RoutedEventArgs e)
-    //{
-    //    SetCheckedState();
-    //}
-
 
     private async void PickFolderButton_Click(object sender, RoutedEventArgs e)
     {
@@ -105,7 +99,6 @@ public sealed partial class MainPage : Page
         {
             textApkFilesName.Text = $"Found APK files (Total: {totalFiles}):";
         }
-
     }
 
     #region SelectAllMethods
