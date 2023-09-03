@@ -41,7 +41,7 @@ public sealed partial class MainPage : Page
 
     private async void MainPage_Loaded(object sender, RoutedEventArgs e)
     {
-        dark_switch.SetValue(ToggleSwitch.IsOnProperty, true);
+        //dark_switch.SetValue(ToggleSwitch.IsOnProperty, true);
     }
 
     //void CheckBoxPage_Loaded(object sender, RoutedEventArgs e)
@@ -87,10 +87,7 @@ public sealed partial class MainPage : Page
 
     async Task GetApkFilesFromFolder(string folderPath)
     {
-        if (dark_switch.IsOn && ViewModel.ApkFiles.Any())
-        {
-            ViewModel.ApkFiles.Clear();
-        }
+
 
         var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
         int totalFiles = apkFiles.Count;

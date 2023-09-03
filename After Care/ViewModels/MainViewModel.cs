@@ -28,6 +28,12 @@ using WinUIEx.Messaging;
 
 namespace After_Care.ViewModels;
 
+public class Category
+{
+    public string Name { get; set; }
+    public List<CheckBox> Apps { get; set; } = new List<CheckBox>();
+}
+
 public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
 {
     private static int _instanceCount = 0;
@@ -36,6 +42,25 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     private static string _deviceArchitecture;
 
     public event PropertyChangedEventHandler PropertyChanged;
+
+
+
+    public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
+
+
+
+    public Dictionary<string, Category> categories = new Dictionary<string, Category>
+{
+    { "Web-Browsers", new Category { Name = "Web Browsers" } },
+    { "Email-Clients", new Category { Name = "Email Clients" } },
+    { "Files-And-Utilities", new Category { Name = "Files and Utilities" } },
+    { "Navigation-Apps", new Category { Name = "Navigation Apps" } },
+    { "Media-And-Social", new Category { Name = "Media and Social" } },
+    { "Social-And-Messeging", new Category { Name = "Social and Messaging" } },
+    { "Network-And-Ad-Blockers", new Category { Name = "Network and Ad Blockers" } },
+    { "Alternative-Stores", new Category { Name = "Alternative Stores" } },
+    { "Anime", new Category { Name = "Anime" } },
+};
 
     // Collection of Local APK Files
     private ObservableCollection<CheckBox> _apkFiles;
@@ -314,44 +339,21 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         // Add to ObservableCollections
         foreach (var category in data)
         {
-            foreach (var app in category.Value)
+            if (categories.TryGetValue(category.Key, out Category categoryInfo))
             {
-                var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
-                switch (category.Key)
+                foreach (var app in category.Value)
                 {
-                    case "Web-Browsers":
-                        ApkFilesWebBrowsers.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Email-Clients":
-                        ApkFilesEmail.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Files-And-Utilities":
-                        ApkFilesFilesAndUtils.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Navigation-Apps":
-                        ApkFilesNavigation.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Media-And-Social":
-                        ApkFilesMedia.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Social-And-Messeging":
-                        ApkFilesSocialMesseging.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Network-And-Ad-Blockers":
-                        ApkFilesNetworkAndAdBlocker.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Alternative-Stores":
-                        ApkFilesAltStores.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    case "Anime":
-                        ApkFilesAnime.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-                        break;
-                    default:
-                        break;
+                    var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
+                    categoryInfo.Apps.Add(new CheckBox { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
                 }
             }
         }
+        foreach (var categoryInfo in categories.Values)
+        {
+            Categories.Add(categoryInfo);
+        }
     }
+
 
 
     // CheckBoxes Logic
