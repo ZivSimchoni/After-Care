@@ -6,119 +6,132 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-
-
-    <Grid x:Name="ContentArea">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-
-        <Grid Margin="12">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-        </Grid>
-
-        <Grid x:Name="DeviceDetails" Grid.Row="1" ColumnSpacing="30" RowSpacing="12"
-          VerticalAlignment="Top" HorizontalAlignment="Left">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-
-            <Grid.Resources>
-                <Style TargetType="TextBlock">
-                    <Setter Property="HorizontalAlignment" Value="Stretch" />
-                    <Setter Property="VerticalAlignment" Value="Stretch" />
-                    <Setter Property="Foreground" Value="White" />
-                    <Setter Property="FontSize" Value="15" />
-                </Style>
-            </Grid.Resources>
-
-            <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="Model:"></TextBlock>
-            <TextBox Name="textDeviceModel" Grid.Column="1" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceModel.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="1"  HorizontalAlignment="Left" Text="Code Name:"></TextBlock>
-            <TextBox Name="textDeviceName" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceName.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-            <TextBlock Grid.Column="0" Grid.Row="2"  HorizontalAlignment="Left" Text="Device's Architecture:"></TextBlock>
-            <TextBox Name="textDeviceArchitecture" AutomationProperties.Name="simple ToggleSwitch" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceArchitecture.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
-
-            <TextBlock Grid.Column="0" Grid.Row="3"  HorizontalAlignment="Left" Text="Choose APK/s Folder:"></TextBlock>
-            <TextBlock Grid.Column="1" Grid.Row="4"  HorizontalAlignment="Right" Margin="10,-10" Text="Only Selected Folder"></TextBlock>
-            <ToggleSwitch AutomationProperties.Name="simple ToggleSwitch" x:Name="dark_switch" IsEnabled="True" Grid.Column="1" Grid.Row="4" CornerRadius="3" VerticalAlignment="Center"  HorizontalAlignment="Right" MinWidth="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
-            <Button x:Name="PickFolderButton" Content="Open a folder" Click="PickFolderButton_Click"  Grid.Column="1" Grid.Row="3"/>
-            <StackPanel VerticalAlignment="Top" Orientation="Horizontal" Grid.Column="0" Grid.Row="4">
-                <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
-            </StackPanel>
-        </Grid>
-
-        <Grid Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5,5">
-            <!--TODO: Add Scroll Viewer-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <!-- Local Apps to Install -->
-            <TextBlock x:Name="textApkFilesName" Text="Apk Files" Grid.Row="0" Grid.Column="1" Padding="20"></TextBlock>
-            <CheckBox x:Name="OptionsAllCheckBox" Content="Select all" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
-            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">
+    <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                <Setter Property="VerticalAlignment" Value="Stretch" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="FontSize" Value="15" />
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <!--CAT#1 Web Browsers-->
+            <TextBlock>Web Browsers</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesWebBrowsers}">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="CheckBox">
-                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#2  Email Clients-->
+            <TextBlock Grid.Row="1" Grid.Column="2">Email Clients</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesEmail}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#3  Files & Utilities-->
+            <TextBlock >Files And Utilities</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesFilesAndUtils}"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}"  Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#4  Navigation-->
+            <TextBlock  >Navigation</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesNavigation}"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#5  Media-->
+            <TextBlock>Media</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesMedia}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <!--CAT#6  Social & Messegings -->
+            <TextBlock>Social And Messegings</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesSocialMesseging}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#7  NetWork & Ad Blockers-->
+            <TextBlock>NetWork And Ad Blockers</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesNetworkAndAdBlocker}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}"  Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#8  Alt Stores-->
+            <TextBlock >Alt Stores</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesAltStores}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--CAT#9 Anime-->
+            <TextBlock  >Anime</TextBlock>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesAnime}"  >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <!--</Grid>-->
+        </StackPanel>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Left" Text="Model:"></TextBlock>
+            <TextBox Name="textDeviceModel"  HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceModel.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock  HorizontalAlignment="Left" Text="Code Name:"></TextBlock>
+            <TextBox Name="textDeviceName"  HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceName.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBlock   HorizontalAlignment="Left" Text="Device's Architecture:"></TextBlock>
+            <TextBox Name="textDeviceArchitecture" AutomationProperties.Name="simple ToggleSwitch" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" IsReadOnly="True" Text="{x:Bind Path=ViewModel.TextDeviceArchitecture.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+            <TextBlock HorizontalAlignment="Left" Text="Choose APK/s Folder:"></TextBlock>
+            <TextBlock  HorizontalAlignment="Right" Margin="10,-10" Text="Only Selected Folder"></TextBlock>
+            <ToggleSwitch AutomationProperties.Name="simple ToggleSwitch" x:Name="dark_switch" IsEnabled="True"  CornerRadius="3" VerticalAlignment="Center"  HorizontalAlignment="Right" MinWidth="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+            <Button x:Name="PickFolderButton" Content="Open a folder" Click="PickFolderButton_Click"/>
+            <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
+                <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
+            </StackPanel>
+            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" HorizontalAlignment="Left">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="CheckBox">
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
             <AppBarSeparator Grid.Column="1" Grid.Row="2" Height="Auto" Width="Auto" Margin="10,10" Padding="20"/>
             <Button Background="Green" Grid.Row="4" Grid.Column="1" Content="Install"/>
-        </Grid>
-
-        <!-- Remote Apps to Install -->
-        <!--<CheckBox x:Name="OptionsAllCheckBoxRemote" Content="Select all Remote" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
-        <ListView ItemsSource="{x:Bind ViewModel.ApkFilesRemote}" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="CheckBox">
-                    <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
-        <CheckBox x:Name="OptionsAllCheckBoxRemote" Content="Select all Remote" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Right" IsChecked="False"></CheckBox>
-        <ListView Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left">
-            <ListView ItemsSource="{x:Bind ViewModel.ApkFilesCategoryRemote}" >
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="TextBlock">
-                    <TextBlock Name="{x:Bind Name}" Text="{x:Bind Text}"/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <ListView ItemsSource="{x:Bind ViewModel.ApkFilesRemote}">
-            <ListView.ItemTemplate>
-                <DataTemplate x:DataType="CheckBox">
-                    <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Margin="24,0,0,0" Checked="Option_Checked" Unchecked="Option_Unchecked" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        </ListView>
-
-    </Grid>
+        </StackPanel>
+            <StackPanel>
+                <TextBlock x:Name="textApkFilesName" Text="Apk Files" Grid.Row="0" Grid.Column="1" Padding="20"></TextBlock>
+                <CheckBox x:Name="OptionsAllCheckBox" Content="Select all" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
+            </StackPanel>
+    </StackPanel>
+    </ScrollViewer>
 </Page>

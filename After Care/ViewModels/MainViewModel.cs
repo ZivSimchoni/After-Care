@@ -22,6 +22,7 @@ using Newtonsoft.Json;
 using After_Care.Core.Helpers;
 using Newtonsoft.Json.Linq;
 using ColorCode.Compilation.Languages;
+using Microsoft.Windows.ApplicationModel.Resources;
 
 namespace After_Care.ViewModels;
 
@@ -91,6 +92,134 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         get; set;
     }
+    // 2023-09-02 - test
+    // Collection of One Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesWebBrowsers;
+    public ObservableCollection<CheckBox> ApkFilesWebBrowsers
+    {
+        get
+        {
+            return _apkFilesWebBrowsers;
+        }
+        set
+        {
+            _apkFilesWebBrowsers = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesWebBrowsers)));
+        }
+    }
+    // Collection of Two Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesEmail;
+    public ObservableCollection<CheckBox> ApkFilesEmail
+    {
+        get
+        {
+            return _apkFilesEmail;
+        }
+        set
+        {
+            _apkFilesEmail = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesEmail)));
+        }
+    }
+    // Collection of Three Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesFilesAndUtils;
+    public ObservableCollection<CheckBox> ApkFilesFilesAndUtils
+    {
+        get
+        {
+            return _apkFilesFilesAndUtils;
+        }
+        set
+        {
+            _apkFilesFilesAndUtils = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesFilesAndUtils)));
+        }
+    }
+    // Collection of Four Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesNavigation;
+    public ObservableCollection<CheckBox> ApkFilesNavigation
+    {
+        get
+        {
+            return _apkFilesNavigation;
+        }
+        set
+        {
+            _apkFilesNavigation = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesNavigation)));
+        }
+    }
+    // Collection of Five Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesMedia;
+    public ObservableCollection<CheckBox> ApkFilesMedia
+    {
+        get
+        {
+            return _apkFilesMedia;
+        }
+        set
+        {
+            _apkFilesMedia = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesMedia)));
+        }
+    }
+    // Collection of Six Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesSocialMesseging;
+    public ObservableCollection<CheckBox> ApkFilesSocialMesseging
+    {
+        get
+        {
+            return _apkFilesSocialMesseging;
+        }
+        set
+        {
+            _apkFilesSocialMesseging = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesSocialMesseging)));
+        }
+    }
+    // Collection of Seven Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesNetworkAndAdBlocker;
+    public ObservableCollection<CheckBox> ApkFilesNetworkAndAdBlocker
+    {
+        get
+        {
+            return _apkFilesNetworkAndAdBlocker;
+        }
+        set
+        {
+            _apkFilesNetworkAndAdBlocker = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesNetworkAndAdBlocker)));
+        }
+    }
+    // Collection of Eight Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesAltStores;
+    public ObservableCollection<CheckBox> ApkFilesAltStores
+    {
+        get
+        {
+            return _apkFilesAltStores;
+        }
+        set
+        {
+            _apkFilesAltStores = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesAltStores)));
+        }
+    }
+    // Collection of Nine Category of APK Files
+    private ObservableCollection<CheckBox> _apkFilesAnime;
+    public ObservableCollection<CheckBox> ApkFilesAnime
+    {
+        get
+        {
+            return _apkFilesAnime;
+        }
+        set
+        {
+            _apkFilesAnime = value;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesAnime)));
+        }
+    }
+
 
     public MainViewModel()
     {
@@ -129,6 +258,17 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         ApkFiles = new ObservableCollection<CheckBox>();
         ApkFilesRemote = new ObservableCollection<CheckBox>();
         ApkFilesCategoryRemote = new ObservableCollection<TextBlock>();
+        // 2023-09-02 - test
+        ApkFilesWebBrowsers = new ObservableCollection<CheckBox>();
+        ApkFilesEmail = new ObservableCollection<CheckBox>();
+        ApkFilesFilesAndUtils = new ObservableCollection<CheckBox>();
+        ApkFilesNavigation = new ObservableCollection<CheckBox>();
+        ApkFilesMedia = new ObservableCollection<CheckBox>();
+        ApkFilesSocialMesseging = new ObservableCollection<CheckBox>();
+        ApkFilesNetworkAndAdBlocker = new ObservableCollection<CheckBox>();
+        ApkFilesAltStores = new ObservableCollection<CheckBox>();
+        ApkFilesAnime = new ObservableCollection<CheckBox>();
+        // 2023-09-02 - test
         LoadApkFromJson();
 
     }
@@ -229,7 +369,9 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         //ApkFilesRemote.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
         // Load Json File
         // C:\Users\Ziv S\source\repos\AfterCare\After Care\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX\Helpers\appLinkDict.json
-        var jsonPath = @"C:\Users\eytan\Programminng\Python\After-Care\After Care\Helpers\appsLinkDict.json";
+      
+        var jsonPath = @"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json";
+
         var json = File.ReadAllText(jsonPath);
         JObject data = JObject.Parse(json);
         //Dictionary<string, Dictionary<string, Dictionary<string, string>>> data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(json);
@@ -237,12 +379,46 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         
         foreach (var category in data)
         {
-            ApkFilesCategoryRemote.Add(new TextBlock() { Name = category.Key, Text = category.Key});
+            //ApkFilesCategoryRemote.Add(new TextBlock() { Name = category.Key, Text = category.Key});
+
             foreach (var app in category.Value)
             {
                 var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
-                ApkFilesRemote.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                switch (category.Key)
+                {
+                    case "Web-Browsers":
+                        ApkFilesWebBrowsers.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Email-Clients":
+                        ApkFilesEmail.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Files-And-Utilities":
+                        ApkFilesFilesAndUtils.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Navigation-Apps":
+                        ApkFilesNavigation.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Media-And-Social":
+                        ApkFilesMedia.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Social-And-Messeging":
+                        ApkFilesSocialMesseging.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Network-And-Ad-Blockers":
+                        ApkFilesNetworkAndAdBlocker.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Alternative-Stores":
+                        ApkFilesAltStores.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    case "Anime":
+                        ApkFilesAnime.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                        break;
+                    default:
+                        break;
+                }
+                //ApkFilesRemote.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
             }
+
         }
 
     }
