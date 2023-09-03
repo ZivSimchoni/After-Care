@@ -14,6 +14,18 @@
 	<UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
+  <ItemGroup>
+    <None Remove="Helpers\adb\adb.exe" />
+    <None Remove="Helpers\adb\AdbWinApi.dll" />
+    <None Remove="Helpers\adb\AdbWinUsbApi.dll" />
+    <None Remove="Helpers\appsLinkDict.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Helpers\adb\adb.exe" />
+    <Content Include="Helpers\adb\AdbWinApi.dll" />
+    <Content Include="Helpers\adb\AdbWinUsbApi.dll" />
+    <Content Include="Helpers\appsLinkDict.json" />
+  </ItemGroup>
 
   <ItemGroup>
     <Manifest Include="$(ApplicationManifest)" />
@@ -39,10 +51,6 @@
 
   <ItemGroup Condition="'$(DisableMsixProjectCapabilityAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">
     <ProjectCapability Include="Msix" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Helpers\adb\" />
   </ItemGroup>
   
   <PropertyGroup Condition="'$(DisableHasPackageAndPublishMenuAddedByProject)'!='true' and '$(EnableMsixTooling)'=='true'">

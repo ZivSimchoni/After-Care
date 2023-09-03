@@ -23,6 +23,8 @@ using After_Care.Core.Helpers;
 using Newtonsoft.Json.Linq;
 using ColorCode.Compilation.Languages;
 using Microsoft.Windows.ApplicationModel.Resources;
+using CommunityToolkit.WinUI.UI.Controls;
+using WinUIEx.Messaging;
 
 namespace After_Care.ViewModels;
 
@@ -49,37 +51,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFiles)));
         }
     }
-
-    // Collection of Remote APK Files
-    private ObservableCollection<CheckBox> _apkFilesRemote;
-    public ObservableCollection<CheckBox> ApkFilesRemote
-    {
-        get
-        {
-            return _apkFilesRemote;
-        }
-        set
-        {
-            _apkFilesRemote = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesRemote)));
-        }
-    }
-
-    // Collection of Category TextBlocks
-    private ObservableCollection<TextBlock> _apkFilesCategoryRemote;
-    public ObservableCollection<TextBlock> ApkFilesCategoryRemote
-    {
-        get
-        {
-            return _apkFilesCategoryRemote;
-        }
-        set
-        {
-            _apkFilesCategoryRemote = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesCategoryRemote)));
-        }
-    }
-
+    // Device Details
     public TextBlock TextDeviceModel
     {
         get; set;
@@ -92,7 +64,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         get; set;
     }
-    // 2023-09-02 - test
     // Collection of One Category of APK Files
     private ObservableCollection<CheckBox> _apkFilesWebBrowsers;
     public ObservableCollection<CheckBox> ApkFilesWebBrowsers
@@ -230,8 +201,8 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
 
         if (_instanceCount == 0)
         {
-            //var deviceFound = GetDeviceDetails(TextDeviceName, TextDeviceModel, TextDeviceArchitecture);
-            var deviceFound = false; // TODO: remove later
+            var deviceFound = GetDeviceDetails(TextDeviceName, TextDeviceModel, TextDeviceArchitecture);
+            //var deviceFound = false; // TODO: remove later
             if (deviceFound)
             {
                 _instanceCount++;
@@ -256,9 +227,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             TextDeviceName.UpdateLayout();
         }
         ApkFiles = new ObservableCollection<CheckBox>();
-        ApkFilesRemote = new ObservableCollection<CheckBox>();
-        ApkFilesCategoryRemote = new ObservableCollection<TextBlock>();
-        // 2023-09-02 - test
         ApkFilesWebBrowsers = new ObservableCollection<CheckBox>();
         ApkFilesEmail = new ObservableCollection<CheckBox>();
         ApkFilesFilesAndUtils = new ObservableCollection<CheckBox>();
@@ -268,9 +236,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         ApkFilesNetworkAndAdBlocker = new ObservableCollection<CheckBox>();
         ApkFilesAltStores = new ObservableCollection<CheckBox>();
         ApkFilesAnime = new ObservableCollection<CheckBox>();
-        // 2023-09-02 - test
         LoadApkFromJson();
-
     }
 
     static bool GetDeviceDetails(TextBlock name, TextBlock model, TextBlock arch)
@@ -282,13 +248,11 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
         Regex rxArchitecture = new Regex(@"(ro.odm.product.cpu.abilist]): \s*(.*)",
           RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-        // Get the current directory of the application
-        var currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
         // Construct the path to adb.exe within the 'adb' folder
-        var adbPath = Path.Combine(currentDirectory, "adb", "adb.exe");
-        //var adbPath = @"After Care\After Care\Helpers\adb\adb.exe";
-        //var adbPath = @"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\adb\adb.exe";
+        var adbPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/adb/adb.exe")).AsTask().Result.Path;
+        //StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
+        //string directoryPath = Path.Combine(installedLocation.Path, "Helpers", "adb");
+        //string adbPath = Path.Combine(directoryPath, "adb.exe");
 
         if (File.Exists(adbPath))
         {
@@ -324,11 +288,9 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                 model.Text = textDeviceModel;
                 name.Text = textDeviceName;
                 arch.Text = textDeviceArchitecture;
-
                 model.UpdateLayout();
                 name.UpdateLayout();
                 arch.UpdateLayout();
-
                 return true;
             }
             catch (Exception)
@@ -338,49 +300,20 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         }
         else
         {
-            //Console.WriteLine("adb.exe not found in " + adbPath);
             return false;
         }
     }
 
     // Load Remote Apk Files
-    /*    private void LoadApkFromJson()
-        {
-            //ApkFilesRemote.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
-            // Load Json File
-            // C:\Users\Ziv S\source\repos\AfterCare\After Care\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX\Helpers\appLinkDict.json
-            var jsonPath = @"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json";
-            var json = File.ReadAllText(jsonPath);
-            var result = JsonConvert.DeserializeObject<Dictionary<string, object>>(json);
-            RecurseDeserialize(result);
-
-            // Add to ApkFilesRemote
-            foreach (var item in result.Values)
-            {
-
-                //ApkFilesRemote.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
-            }
-
-        }*/
-
-    // Load Remote Apk Files
     private void LoadApkFromJson()
     {
-        //ApkFilesRemote.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
         // Load Json File
-        // C:\Users\Ziv S\source\repos\AfterCare\After Care\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX\Helpers\appLinkDict.json
-      
-        var jsonPath = @"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json";
-
+        var jsonPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/appsLinkDict.json")).AsTask().Result.Path; ;
         var json = File.ReadAllText(jsonPath);
         JObject data = JObject.Parse(json);
-        //Dictionary<string, Dictionary<string, Dictionary<string, string>>> data = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, Dictionary<string, string>>>>(json);
-        // Add to ApkFilesRemote
-        
+        // Add to ObservableCollections
         foreach (var category in data)
         {
-            //ApkFilesCategoryRemote.Add(new TextBlock() { Name = category.Key, Text = category.Key});
-
             foreach (var app in category.Value)
             {
                 var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
@@ -416,38 +349,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                     default:
                         break;
                 }
-                //ApkFilesRemote.Add(new CheckBox() { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
-            }
-
-        }
-
-    }
-
-    // JSON Helper
-    private static void RecurseDeserialize(Dictionary<string, object> result)
-    {
-        //Iterate throgh key/value pairs
-        foreach (var keyValuePair in result.ToArray())
-        {
-            //Check to see if Newtonsoft thinks this is a JArray
-            var jarray = keyValuePair.Value as JArray;
-
-            if (jarray != null)
-            {
-                //We have a JArray
-
-                //Convert JArray back to json and deserialize to a list of dictionaries
-                var dictionaries = JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(jarray.ToString());
-
-                //Set the result as the dictionary
-                result[keyValuePair.Key] = dictionaries;
-
-                //Iterate throught the dictionaries
-                foreach (var dictionary in dictionaries)
-                {
-                    //Recurse
-                    RecurseDeserialize(dictionary);
-                }
             }
         }
     }
@@ -473,6 +374,4 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             item.IsChecked = false;
         }
     }
-    //
-
 }
