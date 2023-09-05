@@ -6,14 +6,29 @@ using Windows.Storage;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json.Linq;
+using ColorCode.Compilation.Languages;
+using Microsoft.Windows.ApplicationModel.Resources;
+using CommunityToolkit.WinUI.UI.Controls;
+using WinUIEx.Messaging;
+using System;
+using Windows.Devices.Enumeration;
+using Windows.Devices.Usb;
 using After_Care.Helpers;
 
 namespace After_Care.ViewModels;
 
+
 public class Category
 {
     public string Name { get; set; }
-    public List<CheckBox> Apps { get; set; } = new List<CheckBox>();
+    public List<CheckBoxItem> Apps { get; set; } = new List<CheckBoxItem>();
+}
+
+public class CheckBoxItem
+{
+    public string Name { get; set; }
+    public string Icon { get; set; } // Icon URL from the web
+    public bool IsChecked { get; set; }
 }
 
 public class AndroidDevice
@@ -157,7 +172,17 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                 foreach (var app in category.Value)
                 {
                     var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
-                    categoryInfo.Apps.Add(new CheckBox { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                    //var iconUrl = app.ElementAt(0)["icon"].ToString(Formatting.None).Substring(1);
+                    try
+                    {
+                        var iconDir = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/" + nameToInsert.Replace("-", " ") + ".png")).AsTask().Result.Path;
+                        categoryInfo.Apps.Add(new CheckBoxItem { Name = nameToInsert, Icon = iconDir, IsChecked = false });
+                    }
+                    catch (Exception) 
+                    {
+                        Debug.WriteLine(nameToInsert);
+                    }
+                    
                 }
             }
         }
