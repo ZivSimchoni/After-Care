@@ -155,5 +155,6 @@
   </data>
   <data name="UnkownDevice" xml:space="preserve">
     <value>Unkown</value>
+    <comment>Default string when theres no Android Device</comment>
   </data>
 </root>
