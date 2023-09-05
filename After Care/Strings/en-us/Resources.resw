@@ -157,4 +157,19 @@
     <value>Unkown</value>
     <comment>Default string when theres no Android Device</comment>
   </data>
+  <data name="CannotInstall" xml:space="preserve">
+    <value>Cannot procced with the installation!</value>
+  </data>
+  <data name="FolderOperationCancelled" xml:space="preserve">
+    <value>Operation cancelled.</value>
+  </data>
+  <data name="FolderPicked" xml:space="preserve">
+    <value>Picked folder: </value>
+  </data>
+  <data name="FolderWithNoApk" xml:space="preserve">
+    <value>0 Apps - No Apk/s found in that location!</value>
+  </data>
+  <data name="NoApps" xml:space="preserve">
+    <value>No Apps Found or Selected!</value>
+  </data>
 </root>

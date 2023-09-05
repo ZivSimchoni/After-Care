@@ -75,6 +75,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         LoadApkFromJson();
     }
 
+    // Get the device details or set the device to unknown using setDeviceUnkown() & formatStringText() methods
     public void GetDeviceDetails()
     {
         // Construct the path to adb.exe within the 'adb' folder
@@ -163,6 +164,54 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         foreach (var categoryInfo in categories.Values)
         {
             Categories.Add(categoryInfo);
+        }
+    }
+
+    // Install Apk Files
+    public void InstallApkFiles(string folderPath)    
+    {
+        InstallApkFilesAsync(folderPath).Wait();
+    }
+    public static async Task InstallApkFilesAsync(string folderPath)
+    {
+        // TODO: Fix this
+        var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
+        int totalFiles = apkFiles.Count;
+        int processedFiles = 0;
+
+        if (totalFiles > 0)
+        {
+            var adbPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/adb/adb.exe")).AsTask().Result.Path;
+            await Task.WhenAll(apkFiles.Select(async apkFilePath =>
+            {
+                string apkFileName = Path.GetFileName(apkFilePath);
+                await Task.Yield();
+
+                ProcessStartInfo adbProcessInfo = new ProcessStartInfo
+                {
+                    FileName = adbPath,
+                    Arguments = $"install -r \"{apkFilePath}\"",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                };
+
+                using (Process adbProcess = new Process { StartInfo = adbProcessInfo })
+                {
+                    adbProcess.Start();
+                    var output = await adbProcess.StandardOutput.ReadToEndAsync();
+                    await adbProcess.WaitForExitAsync();
+                    Debug.WriteLine($"Installed: {apkFileName}");
+                    Debug.WriteLine(output);
+                }
+                processedFiles++;
+            }));
+            Debug.WriteLine("Installation complete.");
+        }
+        else
+        {
+            
         }
     }
 

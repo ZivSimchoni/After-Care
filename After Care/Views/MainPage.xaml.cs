@@ -21,6 +21,10 @@ using Windows.Storage.Provider;
 using CommunityToolkit.WinUI.UI.Converters;
 using Windows.UI.Core;
 using CommunityToolkit.WinUI.UI;
+using After_Care.Helpers;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.Windows.AppNotifications.Builder;
+using Microsoft.Windows.AppNotifications;
 
 namespace After_Care.Views;
 
@@ -47,6 +51,7 @@ public sealed partial class MainPage : Page
     {
         // Clear previous returned file name, if it exists, between iterations of this scenario
         PickFolderOutputTextBlock.Text = "";
+        textApkFilesName.Text = "";
 
         // Create a folder picker
         FolderPicker openPicker = new Windows.Storage.Pickers.FolderPicker();
@@ -66,12 +71,12 @@ public sealed partial class MainPage : Page
         if (folder != null)
         {
             StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
-            PickFolderOutputTextBlock.Text = "Picked folder: " + folder.Path;
+            PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("FolderPicked") + folder.Path;
             await GetApkFilesFromFolder(folder.Path);
         }
         else
         {
-            PickFolderOutputTextBlock.Text = "Operation cancelled.";
+            PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("OperationCancelled"); ;
             textApkFilesName.Text = "";
             ViewModel.ApkFiles.Clear();
             OptionsAllCheckBox.IsEnabled = false;
@@ -80,8 +85,6 @@ public sealed partial class MainPage : Page
 
     async Task GetApkFilesFromFolder(string folderPath)
     {
-
-
         var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
         int totalFiles = apkFiles.Count;
         if (totalFiles > 0)
@@ -96,7 +99,7 @@ public sealed partial class MainPage : Page
         }
         else
         {
-            textApkFilesName.Text = $"Found APK files (Total: {totalFiles}):";
+            textApkFilesName.Text = ResourceExtensions.GetLocalized("FolderWithNoApk");
         }
     }
 
@@ -139,4 +142,35 @@ public sealed partial class MainPage : Page
     }
     #endregion
 
+    // What will happen when the user clicks the 'install' button
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        // TODO: Add check if the user has selected any apps to install or Folder contains any APK files
+        if (isCheckBoxSelected() || (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
+        {
+            ViewModel.InstallApkFiles(PickFolderOutputTextBlock.Text);
+        }
+        else
+        {
+            SendNotificationToast(ResourceExtensions.GetLocalized("NoApps"), ResourceExtensions.GetLocalized("CannotInstall"));
+        }
+    }
+    
+    public static bool SendNotificationToast(string title, string message)
+    {
+        var toast = new AppNotificationBuilder()
+            .AddText(title)
+            .AddText(message)
+            .BuildNotification();
+
+        AppNotificationManager.Default.Show(toast);
+        return toast.Id != 0;
+    }
+
+    public bool isCheckBoxSelected()
+    {
+        bool anyApkFolder = ViewModel.ApkFiles.Any(x => x.IsChecked == true);
+        bool anyCategory = ViewModel.categories.Any(x => x.Value.Apps.Any(y => y.IsChecked == true));
+        return anyApkFolder || anyCategory;
+    }
 }

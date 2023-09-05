@@ -41,12 +41,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
            
- 
-
-
-
-
-
     <StackPanel  Name="StackDeviceDetails" Orientation="Horizontal" Padding="20" HorizontalAlignment="Center">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
@@ -81,7 +75,7 @@
             </ListView>
         </StackPanel>
 
-        <Button Background="Green" Padding="50,20" Margin="0,20" FontSize="22" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Background="Green" Padding="50,20" Margin="0,20" Click="Button_Click" FontSize="22" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
             </StackPanel>
         </ScrollViewer>
