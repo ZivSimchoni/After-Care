@@ -15,6 +15,27 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\AdAway.png" />
+    <Content Remove="Assets\Aniyomi.png" />
+    <Content Remove="Assets\Aurora-Droid.png" />
+    <Content Remove="Assets\Aurora-Store.png" />
+    <Content Remove="Assets\Droid-Ify.png" />
+    <Content Remove="Assets\F-droid.png" />
+    <Content Remove="Assets\Google-Docs.png" />
+    <Content Remove="Assets\Google-Sheets.png" />
+    <Content Remove="Assets\Infinity-For-Reddit.png" />
+    <Content Remove="Assets\Instagram-Mod.png" />
+    <Content Remove="Assets\Moelist.png" />
+    <Content Remove="Assets\Netguard.png" />
+    <Content Remove="Assets\NewPipe-X-Sponserblock.png" />
+    <Content Remove="Assets\QR-Code.png" />
+    <Content Remove="Assets\ReThink.png" />
+    <Content Remove="Assets\Saikou.png" />
+    <Content Remove="Assets\Scrambled-Exif.png" />
+    <Content Remove="Assets\Tachiyomi.png" />
+    <Content Remove="Assets\ViMusic.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="Helpers\adb\adb.exe" />
     <None Remove="Helpers\adb\AdbWinApi.dll" />
     <None Remove="Helpers\adb\AdbWinUsbApi.dll" />

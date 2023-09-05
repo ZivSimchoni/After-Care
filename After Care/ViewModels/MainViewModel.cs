@@ -25,24 +25,47 @@ using ColorCode.Compilation.Languages;
 using Microsoft.Windows.ApplicationModel.Resources;
 using CommunityToolkit.WinUI.UI.Controls;
 using WinUIEx.Messaging;
+using System;
+using Windows.Devices.Enumeration;
+using Windows.Devices.Usb;
 
 namespace After_Care.ViewModels;
+
 
 public class Category
 {
     public string Name { get; set; }
-    public List<CheckBox> Apps { get; set; } = new List<CheckBox>();
+    public List<CheckBoxItem> Apps { get; set; } = new List<CheckBoxItem>();
+}
+
+public class CheckBoxItem
+{
+    public string Name { get; set; }
+    public string Icon { get; set; } // Icon URL from the web
+    public bool IsChecked { get; set; }
 }
 
 public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
 {
+    private DeviceWatcher usbDeviceWatcher;
     private static int _instanceCount = 0;
     private static string _deviceName;
     private static string _deviceModel;
     private static string _deviceArchitecture;
 
     public event PropertyChangedEventHandler PropertyChanged;
-
+    public TextBlock TextDeviceModel
+    {
+        get; set;
+    }
+    public TextBlock TextDeviceName
+    {
+        get; set;
+    }
+    public TextBlock TextDeviceArchitecture
+    {
+        get; set;
+    }
 
 
     public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
@@ -76,136 +99,13 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFiles)));
         }
     }
-    // Collection of One Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesWebBrowsers;
-    public ObservableCollection<CheckBox> ApkFilesWebBrowsers
-    {
-        get
-        {
-            return _apkFilesWebBrowsers;
-        }
-        set
-        {
-            _apkFilesWebBrowsers = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesWebBrowsers)));
-        }
-    }
-    // Collection of Two Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesEmail;
-    public ObservableCollection<CheckBox> ApkFilesEmail
-    {
-        get
-        {
-            return _apkFilesEmail;
-        }
-        set
-        {
-            _apkFilesEmail = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesEmail)));
-        }
-    }
-    // Collection of Three Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesFilesAndUtils;
-    public ObservableCollection<CheckBox> ApkFilesFilesAndUtils
-    {
-        get
-        {
-            return _apkFilesFilesAndUtils;
-        }
-        set
-        {
-            _apkFilesFilesAndUtils = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesFilesAndUtils)));
-        }
-    }
-    // Collection of Four Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesNavigation;
-    public ObservableCollection<CheckBox> ApkFilesNavigation
-    {
-        get
-        {
-            return _apkFilesNavigation;
-        }
-        set
-        {
-            _apkFilesNavigation = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesNavigation)));
-        }
-    }
-    // Collection of Five Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesMedia;
-    public ObservableCollection<CheckBox> ApkFilesMedia
-    {
-        get
-        {
-            return _apkFilesMedia;
-        }
-        set
-        {
-            _apkFilesMedia = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesMedia)));
-        }
-    }
-    // Collection of Six Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesSocialMesseging;
-    public ObservableCollection<CheckBox> ApkFilesSocialMesseging
-    {
-        get
-        {
-            return _apkFilesSocialMesseging;
-        }
-        set
-        {
-            _apkFilesSocialMesseging = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesSocialMesseging)));
-        }
-    }
-    // Collection of Seven Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesNetworkAndAdBlocker;
-    public ObservableCollection<CheckBox> ApkFilesNetworkAndAdBlocker
-    {
-        get
-        {
-            return _apkFilesNetworkAndAdBlocker;
-        }
-        set
-        {
-            _apkFilesNetworkAndAdBlocker = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesNetworkAndAdBlocker)));
-        }
-    }
-    // Collection of Eight Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesAltStores;
-    public ObservableCollection<CheckBox> ApkFilesAltStores
-    {
-        get
-        {
-            return _apkFilesAltStores;
-        }
-        set
-        {
-            _apkFilesAltStores = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesAltStores)));
-        }
-    }
-    // Collection of Nine Category of APK Files
-    private ObservableCollection<CheckBox> _apkFilesAnime;
-    public ObservableCollection<CheckBox> ApkFilesAnime
-    {
-        get
-        {
-            return _apkFilesAnime;
-        }
-        set
-        {
-            _apkFilesAnime = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFilesAnime)));
-        }
-    }
-    #endregion
+
+
 
     public MainViewModel()
     {
+
+
         // get textDeviceName details and update view
         TextDeviceModel = new TextBlock();
         TextDeviceName = new TextBlock();
@@ -238,15 +138,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             TextDeviceName.UpdateLayout();
         }
         ApkFiles = new ObservableCollection<CheckBox>();
-        ApkFilesWebBrowsers = new ObservableCollection<CheckBox>();
-        ApkFilesEmail = new ObservableCollection<CheckBox>();
-        ApkFilesFilesAndUtils = new ObservableCollection<CheckBox>();
-        ApkFilesNavigation = new ObservableCollection<CheckBox>();
-        ApkFilesMedia = new ObservableCollection<CheckBox>();
-        ApkFilesSocialMesseging = new ObservableCollection<CheckBox>();
-        ApkFilesNetworkAndAdBlocker = new ObservableCollection<CheckBox>();
-        ApkFilesAltStores = new ObservableCollection<CheckBox>();
-        ApkFilesAnime = new ObservableCollection<CheckBox>();
         LoadApkFromJson();
     }
 
@@ -330,7 +221,17 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                 foreach (var app in category.Value)
                 {
                     var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
-                    categoryInfo.Apps.Add(new CheckBox { Content = nameToInsert, IsEnabled = true, Name = nameToInsert, IsChecked = false });
+                    var iconUrl = app.ElementAt(0)["icon"].ToString(Formatting.None).Substring(1);
+                    try
+                    {
+                        var iconDir = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/" + nameToInsert.Replace("-", " ") + ".png")).AsTask().Result.Path;
+                        categoryInfo.Apps.Add(new CheckBoxItem { Name = nameToInsert, Icon = iconDir, IsChecked = false });
+                    }
+                    catch (Exception) 
+                    {
+                        Debug.WriteLine(nameToInsert);
+                    }
+                    
                 }
             }
         }

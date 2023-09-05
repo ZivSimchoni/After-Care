@@ -23,6 +23,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="local1:Category">
                             <StackPanel Orientation="Horizontal">
+                               
                                 <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="Bold" Margin="5"/>
                                 <ListView ItemsSource="{x:Bind Apps}">
                                     <ListView.ItemsPanel>
@@ -31,8 +32,11 @@
                                         </ItemsPanelTemplate>
                                     </ListView.ItemsPanel>
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="CheckBox">
-                                            <CheckBox Content="{x:Bind Content}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                                        <DataTemplate x:DataType="local1:CheckBoxItem">
+                                            <StackPanel Orientation="Horizontal">
+                                                <Image Source="{x:Bind Icon}" Width="16" Height="16" VerticalAlignment="Center" Margin="5" />
+                                                <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                                            </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
