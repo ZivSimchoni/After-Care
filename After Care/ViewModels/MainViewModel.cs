@@ -1,25 +1,10 @@
-using System.Data;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
-
-using After_Care.Views;
-
 using CommunityToolkit.Mvvm.ComponentModel;
-
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Data;
-
-using Windows.Services.Maps.LocalSearch;
-using Windows.Storage.AccessCache;
-using Windows.Storage.Pickers;
 using Windows.Storage;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
-using Newtonsoft.Json;
-using After_Care.Core.Helpers;
 using Newtonsoft.Json.Linq;
 using ColorCode.Compilation.Languages;
 using Microsoft.Windows.ApplicationModel.Resources;
@@ -28,6 +13,7 @@ using WinUIEx.Messaging;
 using System;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Usb;
+using After_Care.Helpers;
 
 namespace After_Care.ViewModels;
 
@@ -45,32 +31,29 @@ public class CheckBoxItem
     public bool IsChecked { get; set; }
 }
 
+public class AndroidDevice
+{
+    public string Name
+    {
+        get; set;
+    }
+    public string Model
+    {
+        get; set;
+    }
+    public string Architecture
+    {
+        get;set;
+    }
+}
+
 public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
 {
-    private DeviceWatcher usbDeviceWatcher;
-    private static int _instanceCount = 0;
-    private static string _deviceName;
-    private static string _deviceModel;
-    private static string _deviceArchitecture;
-
     public event PropertyChangedEventHandler PropertyChanged;
-    public TextBlock TextDeviceModel
-    {
-        get; set;
-    }
-    public TextBlock TextDeviceName
-    {
-        get; set;
-    }
-    public TextBlock TextDeviceArchitecture
-    {
-        get; set;
-    }
 
+    public AndroidDevice Device { get; set; } = new AndroidDevice();
 
     public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
-
-
 
     public Dictionary<string, Category> categories = new Dictionary<string, Category>
 {
@@ -100,70 +83,36 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         }
     }
 
-
-
     public MainViewModel()
     {
-
-
-        // get textDeviceName details and update view
-        TextDeviceModel = new TextBlock();
-        TextDeviceName = new TextBlock();
-        TextDeviceArchitecture = new TextBlock();
-
-        if (_instanceCount == 0)
-        {
-            var deviceFound = GetDeviceDetails(TextDeviceName, TextDeviceModel, TextDeviceArchitecture);
-            if (deviceFound)
-            {
-                _instanceCount++;
-                _deviceName = TextDeviceName.Text;
-                _deviceModel = TextDeviceModel.Text;
-                _deviceArchitecture = TextDeviceArchitecture.Text;
-            }
-            else
-            {
-                TextDeviceName.Text = "Unknown";
-                TextDeviceModel.Text = "Unknown";
-                TextDeviceArchitecture.Text = "Unknown";
-            }
-        }
-        else
-        {
-            TextDeviceModel.Text = _deviceModel;
-            TextDeviceName.Text = _deviceName;
-            TextDeviceArchitecture.Text = _deviceArchitecture;
-            TextDeviceArchitecture.UpdateLayout();
-            TextDeviceModel.UpdateLayout();
-            TextDeviceName.UpdateLayout();
-        }
+        GetDeviceDetails();
         ApkFiles = new ObservableCollection<CheckBox>();
         LoadApkFromJson();
     }
 
-    static bool GetDeviceDetails(TextBlock name, TextBlock model, TextBlock arch)
+    public void GetDeviceDetails()
     {
-        // Define a regular expression for repeated words.
-        Regex rxProduct = new Regex(@"(ro.build.product]): \s*(.*)",
-          RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex rxModel = new Regex(@"(ro.product.model]): \s*(.*)",
-          RegexOptions.Compiled | RegexOptions.IgnoreCase);
-        Regex rxArchitecture = new Regex(@"(ro.odm.product.cpu.abilist]): \s*(.*)",
-          RegexOptions.Compiled | RegexOptions.IgnoreCase);
         // Construct the path to adb.exe within the 'adb' folder
         var adbPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/adb/adb.exe")).AsTask().Result.Path;
-        //StorageFolder installedLocation = Windows.ApplicationModel.Package.Current.InstalledLocation;
-        //string directoryPath = Path.Combine(installedLocation.Path, "Helpers", "adb");
-        //string adbPath = Path.Combine(directoryPath, "adb.exe");
 
         if (File.Exists(adbPath))
         {
+            // Define a regular expression for repeated words.
+            Regex rxProduct = new Regex(@"(ro.build.product]): \s*(.*)",
+              RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Regex rxModel = new Regex(@"(ro.product.model]): \s*(.*)",
+              RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            Regex rxArchitecture = new Regex(@"(ro.odm.product.cpu.abilist]): \s*(.*)",
+              RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            
+            // Start the child process.
             ProcessStartInfo pi = new ProcessStartInfo()
             {
                 FileName = adbPath,
                 Arguments = "shell getprop",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
+                CreateNoWindow = true,
             };
 
             var p = Process.Start(pi);
@@ -175,35 +124,36 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             MatchCollection matchesProduct = rxProduct.Matches(text);
             MatchCollection matchesModel = rxModel.Matches(text);
             MatchCollection matchesArchitecture = rxArchitecture.Matches(text);
-
-            // store easily 
-            var textDeviceName = "";
-            var textDeviceModel = "";
-            var textDeviceArchitecture = "";
-            // Report the number of matches found.
-            try
-            {
-                textDeviceModel = matchesModel.First().ToString().Split(": ")[1].Replace("[", "").Replace("]", "");
-                textDeviceName = matchesProduct.First().ToString().Split(": ")[1].Replace("[", "").Replace("]", "");
-                //Console.WriteLine("Device Codename: {0}", textDeviceName);
-                textDeviceArchitecture = matchesArchitecture.First().ToString().Split(": ")[1].Replace("[", "").Replace("]", "");
-                model.Text = textDeviceModel;
-                name.Text = textDeviceName;
-                arch.Text = textDeviceArchitecture;
-                model.UpdateLayout();
-                name.UpdateLayout();
-                arch.UpdateLayout();
-                return true;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+            // format the strings and set the device details
+            Device.Model = formatStringText(matchesModel);
+            Device.Name = formatStringText(matchesProduct);
+            Device.Architecture = formatStringText(matchesArchitecture);
         }
         else
         {
-            return false;
+            setDeviceUnkown();
         }
+    }
+
+    // Format the string to get the device details
+    private string formatStringText(MatchCollection stringToFormat)
+    {
+        try
+        {
+            return stringToFormat.First().ToString().Split(": ")[1].Replace("[", "").Replace("]", "");
+        }
+        catch (Exception)
+        { 
+            // if format fails return unkown
+            return ResourceExtensions.GetLocalized("UnkownDevice");
+        }
+    }
+
+    // Set the device details to unkown if the device is not found
+    private void setDeviceUnkown()
+    {
+        var unkownText = ResourceExtensions.GetLocalized("UnkownDevice");
+        Device.Architecture = Device.Model = Device.Name = unkownText;
     }
 
     // Load Remote Apk Files
@@ -240,8 +190,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             Categories.Add(categoryInfo);
         }
     }
-
-
 
     // CheckBoxes Logic
     public void CheckAll()

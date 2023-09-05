@@ -41,7 +41,6 @@ public sealed partial class MainPage : Page
 
     private async void MainPage_Loaded(object sender, RoutedEventArgs e)
     {
-
     }
 
     private async void PickFolderButton_Click(object sender, RoutedEventArgs e)
