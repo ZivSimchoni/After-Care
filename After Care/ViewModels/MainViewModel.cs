@@ -171,7 +171,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                 foreach (var app in category.Value)
                 {
                     var nameToInsert = app.Path.Replace(category.Key, "").Replace(".", "");
-                    var iconUrl = app.ElementAt(0)["icon"].ToString(Formatting.None).Substring(1);
+                    //var iconUrl = app.ElementAt(0)["icon"].ToString(Formatting.None).Substring(1);
                     try
                     {
                         var iconDir = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/" + nameToInsert.Replace("-", " ") + ".png")).AsTask().Result.Path;
