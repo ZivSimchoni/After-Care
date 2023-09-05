@@ -160,6 +160,9 @@
   <data name="CannotInstall" xml:space="preserve">
     <value>Cannot procced with the installation!</value>
   </data>
+  <data name="ConnectDevice" xml:space="preserve">
+    <value>Please Re-connect your device or restart After Care.</value>
+  </data>
   <data name="FolderOperationCancelled" xml:space="preserve">
     <value>Operation cancelled.</value>
   </data>
@@ -171,5 +174,8 @@
   </data>
   <data name="NoApps" xml:space="preserve">
     <value>No Apps Found or Selected!</value>
+  </data>
+  <data name="NoDevice" xml:space="preserve">
+    <value>No Device Found!</value>
   </data>
 </root>

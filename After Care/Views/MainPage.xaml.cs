@@ -146,7 +146,12 @@ public sealed partial class MainPage : Page
     private void Button_Click(object sender, RoutedEventArgs e)
     {
         // TODO: Add check if the user has selected any apps to install or Folder contains any APK files
-        if (isCheckBoxSelected() || (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
+        if (ViewModel.Device.Model.Equals(ResourceExtensions.GetLocalized("UnkownDevice")))
+        {
+            SendNotificationToast(ResourceExtensions.GetLocalized("NoDevice"), ResourceExtensions.GetLocalized("ConnectDevice"));
+        }
+        else if (isCheckBoxSelected()
+                || (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
         {
             ViewModel.InstallApkFiles(PickFolderOutputTextBlock.Text);
         }
