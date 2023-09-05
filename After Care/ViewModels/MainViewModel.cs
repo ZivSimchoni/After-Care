@@ -68,7 +68,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         }
     }
 
-
     public MainViewModel()
     {
         GetDeviceDetails();
