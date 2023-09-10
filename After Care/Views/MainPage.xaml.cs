@@ -71,7 +71,8 @@ public sealed partial class MainPage : Page
         if (folder != null)
         {
             StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
-            PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("FolderPicked") + folder.Path;
+            //PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("FolderPicked") + folder.Path;
+            PickFolderOutputTextBlock.Text = folder.Path;
             await GetApkFilesFromFolder(folder.Path);
         }
         else
