@@ -41,7 +41,6 @@ def mainScrape(listOfApps,beta):
             downloadFDroid(download)
 
 
-
 def initSelenium():
     #################Init######################
     local_state = {
@@ -165,10 +164,6 @@ def downloadFDroid(downloadLink):
     session = requests.Session()
     response = session.get(downloadHref)
     saveFile(appName + appVersion,response,driver)
-
-
-
-
 
 
 def testing():
