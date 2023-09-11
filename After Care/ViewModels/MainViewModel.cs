@@ -197,19 +197,20 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         InstallApkFilesAsync(folderPath).Wait();
     }
+
     public static async Task InstallApkFilesAsync(string folderPath)
     {
         // TODO: Fix this
         var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
-        int totalFiles = apkFiles.Count;
-        int processedFiles = 0;
+        var totalFiles = apkFiles.Count;
+        var processedFiles = 0;
 
         if (totalFiles > 0)
         {
             var adbPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/adb/adb.exe")).AsTask().Result.Path;
             await Task.WhenAll(apkFiles.Select(async apkFilePath =>
             {
-                string apkFileName = Path.GetFileName(apkFilePath);
+                var apkFileName = Path.GetFileName(apkFilePath);
                 await Task.Yield();
 
                 ProcessStartInfo adbProcessInfo = new ProcessStartInfo
@@ -235,7 +236,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
             Debug.WriteLine("Installation complete.");
         }
         else
-        {
+        { // TODO: Add stuff here or remove
             
         }
     }

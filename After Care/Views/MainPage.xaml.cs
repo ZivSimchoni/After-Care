@@ -39,7 +39,6 @@ public sealed partial class MainPage : Page
     {
         ViewModel = App.GetService<MainViewModel>();
         InitializeComponent();
-        //Loaded += CheckBoxPage_Loaded;
         Loaded += MainPage_Loaded;
     }
 
