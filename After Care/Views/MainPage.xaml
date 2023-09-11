@@ -23,7 +23,6 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate x:DataType="local1:Category">
                             <StackPanel Orientation="Horizontal">
-                               
                                 <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="Bold" Margin="5"/>
                                 <ListView ItemsSource="{x:Bind Apps}">
                                     <ListView.ItemsPanel>
@@ -34,8 +33,8 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate x:DataType="local1:CheckBoxItem">
                                             <StackPanel Orientation="Horizontal">
-                                                <Image Source="{x:Bind Icon}" Width="16" Height="16" VerticalAlignment="Center" Margin="5" />
-                                                <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                                                <Image Source="{x:Bind Icon}" Width="Auto" Height="16" VerticalAlignment="Center" Margin="5"/>
+                                                <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}"/>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -67,13 +66,11 @@
                 <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
             </StackPanel>
 
-            <TextBlock x:Name="textApkFilesName" Text="Apk Files" Padding="20"></TextBlock>
-            <CheckBox x:Name="OptionsAllCheckBox" Content="Select all" IsChecked="False" Checked="SelectAll_Checked" Unchecked="SelectAll_Unchecked"></CheckBox>
-
+            <TextBlock x:Name="textApkFilesName" Text="" Padding="20"></TextBlock>
             <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" HorizontalAlignment="Left">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="CheckBox">
-                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" Checked="Option_Checked" Unchecked="Option_Unchecked" />
+                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

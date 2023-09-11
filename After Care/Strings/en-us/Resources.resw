@@ -178,4 +178,7 @@
   <data name="NoDevice" xml:space="preserve">
     <value>No Device Found!</value>
   </data>
+  <data name="FolderWithApk" xml:space="preserve">
+    <value> APK/s found.</value>
+  </data>
 </root>

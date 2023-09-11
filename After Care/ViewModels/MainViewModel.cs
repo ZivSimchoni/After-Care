@@ -176,7 +176,7 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
                     try
                     {
                         var iconDir = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/" + nameToInsert.Replace("-", " ") + ".png")).AsTask().Result.Path;
-                        categoryInfo.Apps.Add(new CheckBoxItem { Name = nameToInsert, Icon = iconDir, IsChecked = false });
+                        categoryInfo.Apps.Add(new CheckBoxItem { Name = nameToInsert, Icon = iconDir, IsChecked = false});
                     }
                     catch (Exception) 
                     {
@@ -237,27 +237,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         else
         {
             
-        }
-    }
-
-    // CheckBoxes Logic
-    public void CheckAll()
-    {
-        if (ApkFiles == null){return;}
-
-        foreach (var item in ApkFiles)
-        {
-            item.IsChecked = true;
-        }
-    }
-
-    public void UnCheckAll()
-    {
-        if (ApkFiles == null) { return; }
-
-        foreach (var item in ApkFiles)
-        {
-            item.IsChecked = false;
         }
     }
 }

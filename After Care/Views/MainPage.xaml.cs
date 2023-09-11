@@ -52,6 +52,7 @@ public sealed partial class MainPage : Page
         // Clear previous returned file name, if it exists, between iterations of this scenario
         PickFolderOutputTextBlock.Text = "";
         textApkFilesName.Text = "";
+        ViewModel.ApkFiles.Clear();
 
         // Create a folder picker
         FolderPicker openPicker = new Windows.Storage.Pickers.FolderPicker();
@@ -77,10 +78,8 @@ public sealed partial class MainPage : Page
         }
         else
         {
-            PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("OperationCancelled"); ;
+            PickFolderOutputTextBlock.Text = ResourceExtensions.GetLocalized("FolderOperationCancelled"); ;
             textApkFilesName.Text = "";
-            ViewModel.ApkFiles.Clear();
-            OptionsAllCheckBox.IsEnabled = false;
         }
     }
 
@@ -90,8 +89,7 @@ public sealed partial class MainPage : Page
         int totalFiles = apkFiles.Count;
         if (totalFiles > 0)
         {
-            OptionsAllCheckBox.IsEnabled = true;
-            textApkFilesName.Text = $"Found APK files (Total: {totalFiles}):";
+            textApkFilesName.Text = totalFiles + ResourceExtensions.GetLocalized("FolderWithApk");
             await Task.WhenAll(apkFiles.Select(async apkFilePath =>
             {
                 ViewModel.ApkFiles.Add(new CheckBox() { Content = Path.GetFileName(apkFilePath), IsEnabled = true, Name = Path.GetFileName(apkFilePath).ToString(), IsChecked = true });
@@ -104,58 +102,21 @@ public sealed partial class MainPage : Page
         }
     }
 
-    #region SelectAllMethods
-    private void SelectAll_Checked(object sender, RoutedEventArgs e)
-    {
-        ViewModel.CheckAll();
-    }
-
-    private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
-    {
-        ViewModel.UnCheckAll();
-    }
-
-  
-    private void SetCheckedState()
-    {
-        if (ViewModel.ApkFiles.All(x => x.IsChecked == true))
-        {
-            OptionsAllCheckBox.IsChecked = true;
-        }
-        else if (ViewModel.ApkFiles.All(x => x.IsChecked == false))
-        {
-            OptionsAllCheckBox.IsChecked = false;
-        }
-        else
-        {
-            OptionsAllCheckBox.IsChecked = false;
-        }
-    }
-
-    private void Option_Checked(object sender, RoutedEventArgs e)
-    {
-        SetCheckedState();
-    }
-
-    private void Option_Unchecked(object sender, RoutedEventArgs e)
-    {
-        SetCheckedState();
-    }
-    #endregion
-
     // What will happen when the user clicks the 'install' button
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        // TODO: Add check if the user has selected any apps to install or Folder contains any APK files
+        // Device is not connected
         if (ViewModel.Device.Model.Equals(ResourceExtensions.GetLocalized("UnkownDevice")))
         {
             SendNotificationToast(ResourceExtensions.GetLocalized("NoDevice"), ResourceExtensions.GetLocalized("ConnectDevice"));
         }
-        else if (isCheckBoxSelected()
-                || (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
+        // Device is connected - Check if the user has selected any apps to install
+        else if (isCheckBoxSelected() || 
+            (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
         {
             ViewModel.InstallApkFiles(PickFolderOutputTextBlock.Text);
         }
+        // No apps selected (via checkbox or folder)
         else
         {
             SendNotificationToast(ResourceExtensions.GetLocalized("NoApps"), ResourceExtensions.GetLocalized("CannotInstall"));
@@ -164,6 +125,7 @@ public sealed partial class MainPage : Page
     
     public static bool SendNotificationToast(string title, string message)
     {
+        // Notification toast to show
         var toast = new AppNotificationBuilder()
             .AddText(title)
             .AddText(message)
@@ -175,8 +137,10 @@ public sealed partial class MainPage : Page
 
     public bool isCheckBoxSelected()
     {
+        // Check if any checkbox is selected (either from the folder or from the categories) 
+        // If so, return true (to install the apps) otherwise return false
         bool anyApkFolder = ViewModel.ApkFiles.Any(x => x.IsChecked == true);
         bool anyCategory = ViewModel.categories.Any(x => x.Value.Apps.Any(y => y.IsChecked == true));
-        return anyApkFolder || anyCategory;
+        return (anyApkFolder || anyCategory);
     }
 }
