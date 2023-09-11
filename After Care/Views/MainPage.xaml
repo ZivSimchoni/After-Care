@@ -61,7 +61,7 @@
         </StackPanel>
         <StackPanel>
             <TextBlock Text="Choose APK/s Folder:"></TextBlock>
-            <Button x:Name="PickFolderButton" Content="Open a folder" Click="PickFolderButton_Click"/>
+            <Button x:Name="PickFolderButton" Margin="0,7" Content="Open a folder" Click="PickFolderButton_Click"/>
             <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
                 <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
             </StackPanel>
