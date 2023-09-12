@@ -80,9 +80,10 @@ def downloadAPKMirror(downloadLink,beta):
 
     driver.get(downloadLink)
     seleniumUserAgent = driver.execute_script("return navigator.userAgent")
-    page_height = driver.execute_script("return document.body.scrollHeight")
-    driver.execute_script(f"window.scrollTo(0, {page_height / 5});")
+    
     time.sleep(1)
+
+    driver.execute_script("arguments[0].scrollIntoView();",driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]"))
     try:
         listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
     except:
