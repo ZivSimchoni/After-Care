@@ -82,56 +82,26 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         }
     }
 
+    private List<string> getSelectedApksToInstall()
+    {
+        List<string> selectedApks = new List<string>();
+        foreach (var category in Categories)
+        {
+            foreach (var app in category.Apps)
+            {
+                if (app.IsChecked)
+                {
+                    selectedApks.Add(app.Name);
+                }
+            }
+        }
+        return selectedApks;
+    }   
+
     public async void InstallApkFiles()
     {
-        await InstallApkFilesAsync();
-    }
-
-    public static async Task InstallApkFilesAsync()
-    {
-        // Get a reference to the installed location of your app
-        string folderPath = Windows.ApplicationModel.Package.Current.InstalledPath;
+        var folderPath = Windows.ApplicationModel.Package.Current.InstalledPath;
         folderPath = folderPath.Replace(@"\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX", @"\Helpers\apks");
-        // Search for .apk files in the folder
-        var apkFiles = Directory.GetFiles(folderPath, "*.apk").ToList();
-        var totalFiles = apkFiles.Count;
-        var processedFiles = 0;
-
-        if (totalFiles > 0)
-        {
-            NotificationAndToasts.SendNotificationStartInstallation();
-            var adbPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/adb/adb.exe")).AsTask().Result.Path;
-            await Task.WhenAll(apkFiles.Select(async apkFilePath =>
-            {
-                var apkFileName = Path.GetFileName(apkFilePath);
-                await Task.Yield();
-
-                ProcessStartInfo adbProcessInfo = new ProcessStartInfo
-                {
-                    FileName = adbPath,
-                    Arguments = $"install -r \"{apkFilePath}\"",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                };
-
-                using (Process adbProcess = new Process { StartInfo = adbProcessInfo })
-                {
-                    adbProcess.Start();
-                    var output = await adbProcess.StandardOutput.ReadToEndAsync();
-                    await adbProcess.WaitForExitAsync();
-                    Debug.WriteLine($"Installed: {apkFileName}");
-                    Debug.WriteLine(output);
-                }
-                processedFiles++;
-            }));
-            if (processedFiles == totalFiles) { NotificationAndToasts.SendNotificationApkInstalled(); }
-            else { NotificationAndToasts.SendNotificationApkFailed(); }
-        }
-        else
-        {
-            NotificationAndToasts.SendNotificationNoApkFound();
-        }
+        await ApkInstallerClass.InstallApkFilesAsync(folderPath, getSelectedApksToInstall());
     }
 }

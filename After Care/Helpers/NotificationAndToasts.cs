@@ -2,6 +2,7 @@
 using Microsoft.Windows.AppNotifications;
 
 namespace After_Care.Helpers;
+
 internal class NotificationAndToasts
 {
     public static bool SendNotificationToast(string title, string message)

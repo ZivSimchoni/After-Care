@@ -6,6 +6,7 @@ import requests
 import os
 import json
 import urllib
+import sys
 
 
 with open('appsLinkDict.json', 'r') as f:

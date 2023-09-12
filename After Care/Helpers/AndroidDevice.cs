@@ -1,21 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Text.RegularExpressions;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
-using System.ComponentModel;
-using System.Collections.ObjectModel;
-using Newtonsoft.Json.Linq;
-using ColorCode.Compilation.Languages;
-using Microsoft.Windows.ApplicationModel.Resources;
-using CommunityToolkit.WinUI.UI.Controls;
-using WinUIEx.Messaging;
-using System;
-using Windows.Devices.Enumeration;
-using Windows.Devices.Usb;
-using After_Care.Helpers;
-using System.Reflection;
-using Windows.ApplicationModel;
 
 namespace After_Care.Helpers;
 
