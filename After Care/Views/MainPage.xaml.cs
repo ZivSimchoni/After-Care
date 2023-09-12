@@ -46,44 +46,25 @@ public sealed partial class MainPage : Page
     {
     }
 
-    // What will happen when the user clicks the 'install' button
     private void Button_Click(object sender, RoutedEventArgs e)
     {
-        // Device is not connected
         if (ViewModel.Device.Model.Equals(ResourceExtensions.GetLocalized("UnkownDevice")))
         {
-            SendNotificationToast(ResourceExtensions.GetLocalized("NoDevice"), ResourceExtensions.GetLocalized("ConnectDevice"));
+            NotificationAndToasts.SendNotificationNoDeviceIsConnected();
         }
-        // Device is connected - Check if the user has selected any apps to install
-        else if (isCheckBoxSelected())
+        else if (!isCheckBoxSelected())
+        {
+            NotificationAndToasts.SendNotificationNoApkSelected();
+        }
+        else
         {
             ViewModel.InstallApkFiles();
         }
-        // No apps selected (via checkbox or folder)
-        else
-        {
-            SendNotificationToast(ResourceExtensions.GetLocalized("NoApps"), ResourceExtensions.GetLocalized("CannotInstall"));
-        }
     }
     
-    public static bool SendNotificationToast(string title, string message)
-    {
-        // Notification toast to show
-        var toast = new AppNotificationBuilder()
-            .AddText(title)
-            .AddText(message)
-            .BuildNotification();
-
-        AppNotificationManager.Default.Show(toast);
-        return toast.Id != 0;
-    }
-
     public bool isCheckBoxSelected()
     {
-        // Check if any checkbox is selected (either from the folder or from the categories) 
-        // If so, return true (to install the apps) otherwise return false
-        //bool anyCategory = ViewModel.categories.Any(x => x.Value.Apps.Any(y => y.IsChecked == true));
-        //return  anyCategory;
+        // Check if any checkbox is selected
         return ViewModel.categories.Any(x => x.Value.Apps.Any(y => y.IsChecked == true));
     }
 }

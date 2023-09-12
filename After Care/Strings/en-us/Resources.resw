@@ -166,7 +166,7 @@
     <value>Please Re-connect your device or restart After Care.</value>
   </data>
   <data name="FolderOperationCancelled" xml:space="preserve">
-    <value>Operation cancelled.</value>
+    <value>Operation cancelled - no folder is selected!</value>
   </data>
   <data name="FolderPicked" xml:space="preserve">
     <value>Picked folder: </value>
@@ -176,7 +176,7 @@
     <comment>Default string when theres no APK/s found at a specific location</comment>
   </data>
   <data name="NoApps" xml:space="preserve">
-    <value>No Apps Found or Selected!</value>
+    <value>No Apps Found!</value>
     <comment>Default toast string when theres no APK is selected</comment>
   </data>
   <data name="NoDevice" xml:space="preserve">
@@ -192,9 +192,30 @@
     <comment>Second page title</comment>
   </data>
   <data name="InstallationComplete" xml:space="preserve">
-    <value>Installation complete.</value>
+    <value>Installation Completed</value>
   </data>
   <data name="InstallationFailed" xml:space="preserve">
     <value>Installation Failed!</value>
+  </data>
+  <data name="ApkInstallationCompleted" xml:space="preserve">
+    <value>Apk/s installed successfully.</value>
+  </data>
+  <data name="ApkInstallationCompletedWithCounter" xml:space="preserve">
+    <value> Apk/s installed successfully.</value>
+  </data>
+  <data name="ApkInstallationFailed" xml:space="preserve">
+    <value>Unfortunately Apk installation failed.</value>
+  </data>
+  <data name="InstallationDidNotComplete" xml:space="preserve">
+    <value>Installation Did Not Complete</value>
+  </data>
+  <data name="NoAppSelected" xml:space="preserve">
+    <value>No Apps Selected!</value>
+  </data>
+  <data name="StartInstallationBody" xml:space="preserve">
+    <value>Please wait while files are being processed.</value>
+  </data>
+  <data name="StartInstallationTitle" xml:space="preserve">
+    <value>Starting Installation</value>
   </data>
 </root>
