@@ -80,7 +80,7 @@ def downloadAPKMirror(downloadLink,beta):
 
     driver.get(downloadLink)
     seleniumUserAgent = driver.execute_script("return navigator.userAgent")
-    
+
     time.sleep(1)
 
     driver.execute_script("arguments[0].scrollIntoView();",driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]"))
@@ -183,8 +183,16 @@ def testing():
     mainScrape(listOfApps[4:],beta)
 
 
-if __name__ == "__main__":
-    testing()
-    # listOfApps = []
-    beta = True
-    # mainScrape(listOfApps, beta)
+import sys
+import argparse
+CLI=argparse.ArgumentParser()
+CLI.add_argument(
+  "--listOfApps",  # name on the CLI - drop the `--` for positional/required parameters
+  nargs="*",  # 0 or more values expected => creates a list
+  type=str,
+  default=[""],  # default if nothing is provided
+)
+args = CLI.parse_args()
+print(args.listOfApps)
+
+mainScrape(args.listOfApps,sys.argv[2])
