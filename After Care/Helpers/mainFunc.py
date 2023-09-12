@@ -12,7 +12,6 @@ with open('appsLinkDict.json', 'r') as f:
     appsLinkDict = json.load(f)
 download_dir = os.getcwd() + r'\tempks'
 
-
 def searchApp(appName):
     for category, apps in appsLinkDict.items():
         for app,details in apps.items():
@@ -42,13 +41,15 @@ def mainScrape(listOfApps,beta):
 
 
 def initSelenium():
+    if not (os.path.exists("tempks")):
+        os.makedirs("tempks")
     #################Init######################
     local_state = {
         "dns_over_https.mode": "secure",
         "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",
     }
     options = Options()
-    options.add_argument("--headless=new")
+    #options.add_argument("--headless=new")
     os.getcwd()
 
 
@@ -112,6 +113,8 @@ def downloadAPKMirror(downloadLink,beta):
         driver.find_element(By.XPATH, '//*[@id="file"]/div[1]/div[2]/div/a').click()
     except:
         driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/article/div[2]/div[3]/div[1]/div[2]/div[2]/div/a').click()
+
+
     downloadlink = driver.find_element(By.XPATH,
                                        '/html/body/div[2]/div/div[1]/article/div[2]/div/div/div[1]/p[2]/span/a').get_attribute(
         "href")
@@ -135,6 +138,8 @@ def saveFile(fileNameVersion,response,driver):
     if fileNameVersion == "app-release.apk":
         fileNameVersion = driver.find_element(By.XPATH,"""//*[@id="repo-content-pjax-container"]/div/div/div/div[1]/div[1]/div[1]/div[1]/h1""").text + ".apk"
     local_file_path = "apks/" + fileNameVersion
+    if not (os.path.exists("apks")):
+        os.makedirs("apks")
     with open(local_file_path, 'wb') as file:
         file.write(response.content)
     driver.quit()
@@ -170,10 +175,11 @@ def testing():
     listOfApps = []
     for category, apps in appsLinkDict.items():
         for app, details in apps.items():
-            if details["url"].startswith("https://f-droid.org"):
-                listOfApps.append(app)
+            listOfApps.append(app)
     beta = True
-    mainScrape(listOfApps,beta)
+
+
+    mainScrape(listOfApps[4:],beta)
 
 
 if __name__ == "__main__":
