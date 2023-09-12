@@ -40,12 +40,14 @@
     <None Remove="Helpers\adb\AdbWinApi.dll" />
     <None Remove="Helpers\adb\AdbWinUsbApi.dll" />
     <None Remove="Helpers\appsLinkDict.json" />
+    <None Remove="Helpers\mainFunc.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Helpers\adb\adb.exe" />
     <Content Include="Helpers\adb\AdbWinApi.dll" />
     <Content Include="Helpers\adb\AdbWinUsbApi.dll" />
     <Content Include="Helpers\appsLinkDict.json" />
+    <Content Include="Helpers\mainFunc.py" />
   </ItemGroup>
 
   <ItemGroup>

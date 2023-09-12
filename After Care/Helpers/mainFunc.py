@@ -6,6 +6,7 @@ import requests
 import os
 import json
 import urllib
+import sys
 
 
 with open('appsLinkDict.json', 'r') as f:
@@ -182,9 +183,5 @@ def testing():
 
     mainScrape(listOfApps[4:],beta)
 
-
-if __name__ == "__main__":
-    testing()
-    # listOfApps = []
-    beta = True
-    # mainScrape(listOfApps, beta)
+print (sys.argv[1],sys.argv[2])
+mainScrape(sys.argv[1],sys.argv[2])
