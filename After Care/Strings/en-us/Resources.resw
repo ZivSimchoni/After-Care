@@ -124,7 +124,8 @@
     <value>After Care DESCRIPTION</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
+    <value>Remote Apk Installation</value>
+    <comment>Main page title</comment>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
@@ -146,6 +147,7 @@
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>After Care allows you to install one or many apk using ADB without much hassle, you just select the apps from a list and plug the Android device to your Computer.</value>
+    <comment>About us Description</comment>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.Content" xml:space="preserve">
     <value>Privacy Statement</value>
@@ -171,14 +173,28 @@
   </data>
   <data name="FolderWithNoApk" xml:space="preserve">
     <value>0 Apps - No Apk/s found in that location!</value>
+    <comment>Default string when theres no APK/s found at a specific location</comment>
   </data>
   <data name="NoApps" xml:space="preserve">
     <value>No Apps Found or Selected!</value>
+    <comment>Default toast string when theres no APK is selected</comment>
   </data>
   <data name="NoDevice" xml:space="preserve">
     <value>No Device Found!</value>
+    <comment>Default toast string when theres no Android Device is connected</comment>
   </data>
   <data name="FolderWithApk" xml:space="preserve">
     <value> APK/s found.</value>
+    <comment>Default string when theres APK/s found at a specific location</comment>
+  </data>
+  <data name="Shell_LocalFiles.Content" xml:space="preserve">
+    <value>Local Files Installation Page</value>
+    <comment>Second page title</comment>
+  </data>
+  <data name="InstallationComplete" xml:space="preserve">
+    <value>Installation complete.</value>
+  </data>
+  <data name="InstallationFailed" xml:space="preserve">
+    <value>Installation Failed!</value>
   </data>
 </root>

@@ -70,25 +70,9 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     { "Anime", new Category { Name = "Anime" } },
 };
 
-    // Collection of Local APK Files
-    private ObservableCollection<CheckBox> _apkFiles;
-    public ObservableCollection<CheckBox> ApkFiles
-    {
-        get
-        {
-            return _apkFiles;
-        }
-        set
-        {
-            _apkFiles = value;
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ApkFiles)));
-        }
-    }
-
-    public MainViewModel()
+   public MainViewModel()
     {
         GetDeviceDetails();
-        ApkFiles = new ObservableCollection<CheckBox>();
         LoadApkFromJson();
     }
 

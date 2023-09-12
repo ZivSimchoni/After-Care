@@ -59,22 +59,6 @@
             <TextBlock    Text="Device's Architecture:"></TextBlock>
             <TextBox Name="textDeviceArchitecture" AutomationProperties.Name="simple ToggleSwitch"  IsReadOnly="True" Text="{x:Bind Path=ViewModel.Device.Architecture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
         </StackPanel>
-        <StackPanel>
-            <TextBlock Text="Choose APK/s Folder:"></TextBlock>
-            <Button x:Name="PickFolderButton" Margin="0,7" Content="Open a folder" Click="PickFolderButton_Click"/>
-            <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
-                <TextBlock x:Name="PickFolderOutputTextBlock" TextWrapping="Wrap" FontSize="14"/>
-            </StackPanel>
-
-            <TextBlock x:Name="textApkFilesName" Text="" Padding="20"></TextBlock>
-            <ListView ItemsSource="{x:Bind ViewModel.ApkFiles}" HorizontalAlignment="Left">
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="CheckBox">
-                        <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
 
         <Button Background="Green" Padding="50,20" Margin="0,20" Click="Button_Click" FontSize="22" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
