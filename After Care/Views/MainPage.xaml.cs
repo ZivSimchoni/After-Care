@@ -113,7 +113,7 @@ public sealed partial class MainPage : Page
         else if (isCheckBoxSelected() || 
             (!(textApkFilesName.Text.Contains('0') || textApkFilesName.Text.Equals("") || PickFolderOutputTextBlock.Equals(""))))
         {
-            ViewModel.InstallApkFiles(PickFolderOutputTextBlock.Text);
+            ViewModel.InstallApkFiles();
         }
         // No apps selected (via checkbox or folder)
         else
