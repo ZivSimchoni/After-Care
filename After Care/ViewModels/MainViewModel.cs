@@ -14,6 +14,8 @@ using System;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Usb;
 using After_Care.Helpers;
+using System.Reflection;
+using Windows.ApplicationModel;
 
 namespace After_Care.ViewModels;
 
@@ -192,16 +194,19 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
         }
     }
 
-    // Install Apk Files
-    public void InstallApkFiles(string folderPath)    
+    public async void InstallApkFiles()
     {
-        InstallApkFilesAsync(folderPath).Wait();
+        await InstallApkFilesAsync();
     }
 
-    public static async Task InstallApkFilesAsync(string folderPath)
+    public static async Task InstallApkFilesAsync()
     {
-        // TODO: Fix this
-        var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
+        // Get a reference to the installed location of your app
+        string folderPath = Windows.ApplicationModel.Package.Current.InstalledPath;
+        folderPath = folderPath.Replace(@"\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX", @"\Helpers\apks");
+        // Search for .apk files in the folder
+        var apkFiles = Directory.GetFiles(folderPath, "*.apk").ToList();
+
         var totalFiles = apkFiles.Count;
         var processedFiles = 0;
 
