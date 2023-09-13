@@ -62,19 +62,25 @@ internal class ApkInstallerClass
         try
         {
             var pythonScriptPath = StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Helpers/MainFunc.py")).AsTask().Result.Path;
-            
+            string apkFilesToPassAsArgument = "";
+            foreach (var selctedApkInList in selectedApkFiles)
+            {
+                apkFilesToPassAsArgument += '\"' + selctedApkInList +'\"' + ",";
+            }
+            apkFilesToPassAsArgument = apkFilesToPassAsArgument.Substring(0, apkFilesToPassAsArgument.Length - 1);
+
             if (File.Exists(pythonScriptPath))
             {              
-                var downloadBetaIfPresent = "true"; // beta - true or false
+                var downloadBetaIfPresent = "True"; // beta - true or false
 
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = "python", // Use the Python interpreter from the system environment variable
-                    Arguments = $"{pythonScriptPath} {selectedApkFiles} {downloadBetaIfPresent}",
+                    Arguments = $"{pythonScriptPath} {apkFilesToPassAsArgument} {downloadBetaIfPresent}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
-                    CreateNoWindow = true
+                    CreateNoWindow = false
                 };
 
                 using (Process process = new Process { StartInfo = startInfo })
