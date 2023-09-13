@@ -47,6 +47,6 @@ public partial class LocalFilesViewModel : ObservableRecipient, INotifyPropertyC
 
     public async Task InstallApkFiles(string folderPathForLocalFiles)
     {
-        await ApkInstallerClass.InstallApkFilesAsync(folderPathForLocalFiles, getSelectedApksToInstall());
+        await ApkInstallerClass.InstallApkFilesAsync(folderPathForLocalFiles, getSelectedApksToInstall(), false);
     }
 }

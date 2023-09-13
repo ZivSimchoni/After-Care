@@ -6,18 +6,24 @@ using Windows.Storage;
 namespace After_Care.Helpers;
 internal class ApkInstallerClass
 {
-    public static async Task InstallApkFilesAsync(string folderPathForLocalFiles, List<string> selectedApkFiles)
+    public static async Task InstallApkFilesAsync(string folderPathForLocalFiles, List<string> selectedApkFiles, bool isRemoteInstall)
     {
         if (string.IsNullOrEmpty(folderPathForLocalFiles) || selectedApkFiles.Count == 0) 
         { 
             NotificationAndToasts.SendNotificationNoApkSelected();
             return; 
         }
-        if (!downloadFilesUsingPythonScript(selectedApkFiles))
+        // if its remote files, download them first
+        if (isRemoteInstall)
         {
-            // TODO: add notification for failed download or something
-            return;
-        }    
+            folderPathForLocalFiles = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads\AfterCareApks\";
+            if (!downloadFilesUsingPythonScript(selectedApkFiles))
+            {
+                // TODO: add notification for failed download or something
+                return;
+            }
+            selectedApkFiles = Directory.GetFiles(folderPathForLocalFiles, "*.apk").ToList();
+        }
         var totalFiles = selectedApkFiles.Count;
         var processedFiles = 0;
         if (totalFiles > 0)
@@ -28,11 +34,10 @@ internal class ApkInstallerClass
             {
                 var apkFileName = Path.GetFileName(apkFilePath);
                 await Task.Yield();
-                string folderPathForApksDownload = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads\AfterCareApks\";
                 ProcessStartInfo adbProcessInfo = new ProcessStartInfo
                 {
                     FileName = adbPath,
-                    Arguments = $"install -r \"{folderPathForApksDownload}\"",
+                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFileName}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,

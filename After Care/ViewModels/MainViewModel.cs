@@ -102,6 +102,6 @@ public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         var folderPath = Windows.ApplicationModel.Package.Current.InstalledPath;
         folderPath = folderPath.Replace(@"\bin\x86\Debug\net7.0-windows10.0.19041.0\win10-x86\AppX", @"\Helpers\apks");
-        await ApkInstallerClass.InstallApkFilesAsync(folderPath, getSelectedApksToInstall());
+        await ApkInstallerClass.InstallApkFilesAsync(folderPath, getSelectedApksToInstall(), true);
     }
 }

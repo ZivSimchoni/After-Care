@@ -170,7 +170,7 @@ def downloadFDroid(downloadLink):
     if downloadLink == "https://f-droid.org/":
         downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute("href")
         appName = "Fdroid"
-        appVersion = "0.0"
+        appVersion = ".apk"
     else:
         downloadHref = driver.find_element(By.CLASS_NAME,"package-version-download").find_element(By.TAG_NAME,"a").get_attribute("href")
         appName = driver.find_element(By.CLASS_NAME,"package-name").text
