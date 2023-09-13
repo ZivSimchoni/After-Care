@@ -7,7 +7,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="ContentArea">
-		<ScrollViewer>
+		<ScrollViewer VerticalScrollBarVisibility="Auto">
 		<StackPanel>
 		<StackPanel  Name="StackDeviceDetails" Orientation="Horizontal" Padding="20" HorizontalAlignment="Center">
 			<StackPanel.Resources>
