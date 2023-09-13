@@ -9,10 +9,8 @@ import urllib
 import sys
 
 
-
-
 def searchApp(appName):
-    with open(r"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json", 'r') as f:
+    with open(r'C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json', 'r') as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app,details in apps.items():
@@ -42,22 +40,20 @@ def mainScrape(listOfApps,beta):
 
 
 def initSelenium():
-    if not (os.path.exists("tempks")):
-        os.makedirs("tempks")
+    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
     #################Init######################
     local_state = {
         "dns_over_https.mode": "secure",
         "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",
     }
     options = Options()
-
-    #options.add_argument("--headless=new")
+    options.add_argument("--headless=new")
     os.getcwd()
-    download_dir = os.getcwd() + r'\tempks'
+    #download_dir = os.getcwd() + r'\tempks'
 
 
     prefs = {"profile.default_content_settings.popups": 0,
-             "download.default_directory": download_dir,  ### Set the path accordingly
+             "download.default_directory": downloads_folder,  ### Set the path accordingly
              "download.prompt_for_download": False,  ## change the downpath accordingly
              "download.directory_upgrade": True,}
     options.add_experimental_option("prefs", prefs)
@@ -80,7 +76,7 @@ def downloadGitHub(downloadLink):
     saveFile(fileNameVersion,response,driver)
 
 def downloadAPKMirror(downloadLink,beta):
-    download_dir = os.getcwd() + r'\tempks'
+
     driver = initSelenium()
 
     driver.get(downloadLink)
@@ -137,9 +133,10 @@ def downloadAPKMirror(downloadLink,beta):
     for cookie in cookies:
         session.cookies.set(cookie['name'], cookie['value'])
     response = session.get(downloadlink)
-    latest_download = max(os.listdir(download_dir), key=lambda x: os.path.getctime(os.path.join(download_dir, x)))
+    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
+    latest_download = max(os.listdir(downloads_folder), key=lambda x: os.path.getctime(os.path.join(downloads_folder, x)))
     saveFile(fileNameVersion + ".apk",response,driver)
-    os.remove(os.path.join(download_dir, latest_download))
+    os.remove(os.path.join(downloads_folder, latest_download))
     # Close the WebDriver session when done
 
 
@@ -147,14 +144,16 @@ def saveFile(fileNameVersion,response,driver):
     #check if response is succeful and only then continue
     if fileNameVersion == "app-release.apk":
         fileNameVersion = driver.find_element(By.XPATH,"""//*[@id="repo-content-pjax-container"]/div/div/div/div[1]/div[1]/div[1]/div[1]/h1""").text + ".apk"
-    local_file_path = "apks/" + fileNameVersion
-    if not (os.path.exists("apks")):
-        os.makedirs("apks")
+    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
+    if not(os.path.exists(downloads_folder+"/AfterCareApks")):
+        os.makedirs(downloads_folder+"/AfterCareApks")
+    local_file_path = downloads_folder + "/AfterCareApks/" + fileNameVersion
+
     with open(local_file_path, 'wb') as file:
         file.write(response.content)
     driver.quit()
 
-    print('succefully downloaded ' + fileNameVersion)
+    print('successfully downloaded ' + fileNameVersion)
 
 # def searchForApp(nameOfApp):
 #     for website in data['websites']:
@@ -171,7 +170,7 @@ def downloadFDroid(downloadLink):
     if downloadLink == "https://f-droid.org/":
         downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute("href")
         appName = "Fdroid"
-        appVersion = "0"
+        appVersion = "0.0"
     else:
         downloadHref = driver.find_element(By.CLASS_NAME,"package-version-download").find_element(By.TAG_NAME,"a").get_attribute("href")
         appName = driver.find_element(By.CLASS_NAME,"package-name").text
@@ -191,5 +190,6 @@ def downloadFDroid(downloadLink):
 
 
 import sys
-
+print(sys.argv[1:-1])
+print(sys.argv[-1])
 mainScrape(sys.argv[1:-1],sys.argv[-1])
