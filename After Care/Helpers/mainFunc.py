@@ -12,7 +12,7 @@ import sys
 
 
 def searchApp(appName):
-    with open('appsLinkDict.json', 'r') as f:
+    with open(r"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json", 'r') as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app,details in apps.items():
@@ -50,6 +50,7 @@ def initSelenium():
         "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",
     }
     options = Options()
+
     #options.add_argument("--headless=new")
     os.getcwd()
     download_dir = os.getcwd() + r'\tempks'
@@ -58,10 +59,11 @@ def initSelenium():
     prefs = {"profile.default_content_settings.popups": 0,
              "download.default_directory": download_dir,  ### Set the path accordingly
              "download.prompt_for_download": False,  ## change the downpath accordingly
-             "download.directory_upgrade": True}
+             "download.directory_upgrade": True,}
     options.add_experimental_option("prefs", prefs)
 
     options.add_experimental_option('localState', local_state)
+    options.add_argument("--disable-usb-keyboard-detect")
     driver = webdriver.Chrome(options=options)
     return driver
 
@@ -169,7 +171,7 @@ def downloadFDroid(downloadLink):
     if downloadLink == "https://f-droid.org/":
         downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute("href")
         appName = "Fdroid"
-        appVersion = 0.0
+        appVersion = "0"
     else:
         downloadHref = driver.find_element(By.CLASS_NAME,"package-version-download").find_element(By.TAG_NAME,"a").get_attribute("href")
         appName = driver.find_element(By.CLASS_NAME,"package-name").text
