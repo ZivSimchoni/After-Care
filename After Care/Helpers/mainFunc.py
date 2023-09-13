@@ -9,11 +9,11 @@ import urllib
 import sys
 
 
-with open('appsLinkDict.json', 'r') as f:
-    appsLinkDict = json.load(f)
-download_dir = os.getcwd() + r'\tempks'
+
 
 def searchApp(appName):
+    with open('appsLinkDict.json', 'r') as f:
+        appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app,details in apps.items():
             if app == appName:
@@ -52,6 +52,7 @@ def initSelenium():
     options = Options()
     #options.add_argument("--headless=new")
     os.getcwd()
+    download_dir = os.getcwd() + r'\tempks'
 
 
     prefs = {"profile.default_content_settings.popups": 0,
@@ -77,6 +78,7 @@ def downloadGitHub(downloadLink):
     saveFile(fileNameVersion,response,driver)
 
 def downloadAPKMirror(downloadLink,beta):
+    download_dir = os.getcwd() + r'\tempks'
     driver = initSelenium()
 
     driver.get(downloadLink)
@@ -85,23 +87,27 @@ def downloadAPKMirror(downloadLink,beta):
     time.sleep(1)
 
     driver.execute_script("arguments[0].scrollIntoView();",driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]"))
-    try:
-        listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
-    except:
-        driver.refresh()
-        time.sleep(1)
-        listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
-        if len(listOfAvailVersions) == 0:
-            print("unable to find list of version, refreshing and trying again")
-            return downloadAPKMirror(downloadLink,beta)
-    if (beta):
-        listOfAvailVersions[0].click()
-    else:
-        for div_element in listOfAvailVersions:
-            text_content = div_element.text
-            if "beta" not in text_content:
-                div_element.click()
-                break
+
+    time.sleep(2)
+    # try:
+    #     listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
+    # except:
+    #     driver.refresh()
+    #     time.sleep(1)
+    #     listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
+    #     if len(listOfAvailVersions) == 0:
+    #         print("unable to find list of version, refreshing and trying again")
+    #         return downloadAPKMirror(downloadLink,beta)
+    # if (beta):
+    #     listOfAvailVersions[0].click()
+    # else:
+    #     for div_element in listOfAvailVersions:
+    #         text_content = div_element.text
+    #         if "beta" not in text_content:
+    #             div_element.click()
+    #             break
+    listOfAvailableVersions = driver.find_element(By.XPATH, """//*[@id="primary"]/div[6]""").find_elements(By.TAG_NAME, "h5")
+    listOfAvailableVersions[0].click()
 
     fileNameVersion = driver.find_element(By.TAG_NAME,'h1').text
 
@@ -173,27 +179,15 @@ def downloadFDroid(downloadLink):
     saveFile(appName + appVersion,response,driver)
 
 
-def testing():
-    listOfApps = []
-    for category, apps in appsLinkDict.items():
-        for app, details in apps.items():
-            listOfApps.append(app)
-    beta = True
-
-
-    mainScrape(listOfApps[4:],beta)
+# def testing():
+#     listOfApps = []
+#     for category, apps in appsLinkDict.items():
+#         for app, details in apps.items():
+#             listOfApps.append(app)
+#     beta = True
+    # mainScrape(listOfApps[4:],beta)
 
 
 import sys
-import argparse
-CLI=argparse.ArgumentParser()
-CLI.add_argument(
-  "--listOfApps",  # name on the CLI - drop the `--` for positional/required parameters
-  nargs="*",  # 0 or more values expected => creates a list
-  type=str,
-  default=[""],  # default if nothing is provided
-)
-args = CLI.parse_args()
-print(args.listOfApps)
 
-mainScrape(args.listOfApps,sys.argv[2])
+mainScrape(sys.argv[1:-1],sys.argv[-1])
