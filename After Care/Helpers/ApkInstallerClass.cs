@@ -28,11 +28,11 @@ internal class ApkInstallerClass
             {
                 var apkFileName = Path.GetFileName(apkFilePath);
                 await Task.Yield();
-
+                string folderPathForApksDownload = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads\AfterCareApks\";
                 ProcessStartInfo adbProcessInfo = new ProcessStartInfo
                 {
                     FileName = adbPath,
-                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFilePath}\"",
+                    Arguments = $"install -r \"{folderPathForApksDownload}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -65,7 +65,7 @@ internal class ApkInstallerClass
             string apkFilesToPassAsArgument = "";
             foreach (var selctedApkInList in selectedApkFiles)
             {
-                apkFilesToPassAsArgument += '\"' + selctedApkInList +'\"' + ",";
+                apkFilesToPassAsArgument += '\"' + selctedApkInList +'\"' + " ";
             }
             apkFilesToPassAsArgument = apkFilesToPassAsArgument.Substring(0, apkFilesToPassAsArgument.Length - 1);
 
@@ -73,14 +73,17 @@ internal class ApkInstallerClass
             {              
                 var downloadBetaIfPresent = "True"; // beta - true or false
 
+
+                
+
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = "python", // Use the Python interpreter from the system environment variable
-                    Arguments = $"{pythonScriptPath} {apkFilesToPassAsArgument} {downloadBetaIfPresent}",
+                    Arguments = $"\"{pythonScriptPath}\" {apkFilesToPassAsArgument} {downloadBetaIfPresent}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
-                    CreateNoWindow = false
+                    CreateNoWindow = true
                 };
 
                 using (Process process = new Process { StartInfo = startInfo })
@@ -91,7 +94,7 @@ internal class ApkInstallerClass
                     // You can capture the output or handle errors if needed
                     var output = process.StandardOutput.ReadToEnd();
                     var error = process.StandardError.ReadToEnd();
-
+                    Debug.WriteLine(error);
                     // TODO: Process the output and error as needed
                 }
                 return true;
