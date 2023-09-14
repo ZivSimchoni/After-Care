@@ -126,7 +126,7 @@
       "Description": "WhatsApp is a centralized instant messaging application."
     },
     "Telegram": {
-      "url": "https://www.apkmirror.com/apk/telegram-fz-llc/telegram/",
+      "url": "https://telegram.org/dl/android/apk",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5cf876afcd188.png&w=96&h=96&q=100",
       "Description": "Telegram is a cloud-based and centralized instant messaging service."
     },
@@ -174,11 +174,11 @@
       "icon": "https://f-droid.org/repo/com.aurora.store/en-US/icon_tbAhwq51NNd0liZcTg0cQNNvazxrWlj7bPCe_1TkCV8=.png",
       "Description": "An open-source alternative to Google Play Store with privacy and modern design."
     },
-	"F-droid":{
-		"url": "https://f-droid.org/",
-		"icon": "https://f-droid.org/assets/fdroid-logo_bfHl7nsLHOUQxzdU8-rGIhn4bAgl6z7k2mA3fWoCyT4=.png",
-		"Description":"f-droid"
-	}
+    "F-droid": {
+      "url": "https://f-droid.org/F-Droid.apk",
+      "icon": "https://f-droid.org/assets/fdroid-logo_bfHl7nsLHOUQxzdU8-rGIhn4bAgl6z7k2mA3fWoCyT4=.png",
+      "Description": "f-droid"
+    }
   },
   "Anime": {
     "Ani-yomi": {
