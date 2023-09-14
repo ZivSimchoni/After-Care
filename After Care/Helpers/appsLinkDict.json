@@ -44,16 +44,6 @@
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F04%2FMiXplorer_round.png&w=96&h=96&q=100",
       "Description": "MiXplorer is the best Android file explorer."
     },
-    "Google-Docs": {
-      "url": "https://www.apkmirror.com/apk/google-inc/docs/",
-      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F05%2F60%2F60aef69fb25a7.png&w=96&h=96&q=100",
-      "Description": "Google Docs is an online word processor."
-    },
-    "Google-Sheets": {
-      "url": "https://www.apkmirror.com/apk/google-inc/sheets/",
-      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F05%2F47%2F60aefbb049fa3.png&w=96&h=96&q=100",
-      "Description": "Google Sheets is an online spreadsheet application."
-    },
     "SD-Maid-SE": {
       "url": "https://apt.izzysoft.de/fdroid/index/apk/eu.darken.sdmse/",
       "icon": "https://play-lh.googleusercontent.com/3YFNiq-YDYH6GeqEQNqbpieBljc-HSBT1TRAG5triq-BrnqolhbASdH5bNHA0n-mAQ",
@@ -153,7 +143,7 @@
   },
   "Network-And-Ad-Blockers": {
     "AFWall+": {
-      "url": "https://www.apkmirror.com/apk/portgenix/afwall-android-firewall/",
+      "url": "https://github.com/ukanth/afwall/releases/latest/",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2022%2F06%2F81%2F62ba9aae7fc09.png&w=96&h=96&q=100",
       "Description": "AFWall+ is an iptables based firewall for Android."
     },
