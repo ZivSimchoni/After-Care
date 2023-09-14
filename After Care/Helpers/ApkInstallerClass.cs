@@ -6,6 +6,7 @@ using Windows.Storage;
 namespace After_Care.Helpers;
 internal class ApkInstallerClass
 {
+    static string appDownloadedSuccefully = "";
     public static async Task InstallApkFilesAsync(string folderPathForLocalFiles, List<string> selectedApkFiles, bool isRemoteInstall)
     {
         if (string.IsNullOrEmpty(folderPathForLocalFiles) || selectedApkFiles.Count == 0) 
@@ -22,7 +23,16 @@ internal class ApkInstallerClass
                 // TODO: add notification for failed download or something
                 return;
             }
-            selectedApkFiles = Directory.GetFiles(folderPathForLocalFiles, "*.apk").ToList();
+            if (appDownloadedSuccefully.Contains("successfully"))
+            {
+                selectedApkFiles = appDownloadedSuccefully.Split("successfully downloaded ").ToList();
+                selectedApkFiles.Remove("");
+            }
+            else
+            {
+                return;
+            }
+
         }
         var totalFiles = selectedApkFiles.Count;
         var processedFiles = 0;
@@ -37,7 +47,7 @@ internal class ApkInstallerClass
                 ProcessStartInfo adbProcessInfo = new ProcessStartInfo
                 {
                     FileName = adbPath,
-                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFileName}",
+                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFileName}\"",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -84,7 +94,7 @@ internal class ApkInstallerClass
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
                     FileName = "python", // Use the Python interpreter from the system environment variable
-                    Arguments = $"\"{pythonScriptPath}\" {apkFilesToPassAsArgument} {downloadBetaIfPresent}",
+                    Arguments = $"\"{pythonScriptPath}\" \"{pythonScriptPath}\" {apkFilesToPassAsArgument} {downloadBetaIfPresent}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
@@ -99,7 +109,10 @@ internal class ApkInstallerClass
                     // You can capture the output or handle errors if needed
                     var output = process.StandardOutput.ReadToEnd();
                     var error = process.StandardError.ReadToEnd();
+                    Debug.WriteLine(output);
                     Debug.WriteLine(error);
+                    appDownloadedSuccefully = output;
+
                     // TODO: Process the output and error as needed
                 }
                 return true;

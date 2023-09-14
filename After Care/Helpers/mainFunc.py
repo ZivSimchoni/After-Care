@@ -9,8 +9,8 @@ import urllib
 import sys
 
 
-def searchApp(appName):
-    with open(r'C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\appsLinkDict.json', 'r') as f:
+def searchApp(jsonFileLocation,appName):
+    with open(jsonFileLocation + '/../appsLinkDict.json', 'r') as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app,details in apps.items():
@@ -24,10 +24,10 @@ def searchApp(appName):
                 }
 
 
-def mainScrape(listOfApps,beta):
+def mainScrape(jsonFileLocation,listOfApps,beta):
     for App in listOfApps:
         #downloadWebSite,downloadLink = searchForApp(App)
-        download = searchApp(App)["URL"]
+        download = searchApp(jsonFileLocation,App)["URL"]
         #downloadListTemp = download.split('/')
         #downloadparse = urlparse(download)
         #downloadWebSite =  downloadparse.hostname
@@ -104,8 +104,15 @@ def downloadAPKMirror(downloadLink,beta):
     #         if "beta" not in text_content:
     #             div_element.click()
     #             break
-    listOfAvailableVersions = driver.find_element(By.XPATH, """//*[@id="primary"]/div[6]""").find_elements(By.TAG_NAME, "h5")
-    listOfAvailableVersions[0].click()
+
+    divOfAllVersions = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div[5]")
+    try:
+        splitfTable=divOfAllVersions.find_element(By.CLASS_NAME, "appRow")
+    except:
+        divOfAllVersions = driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div[6]")
+        splitfTable= divOfAllVersions.find_element(By.CLASS_NAME, "appRow")
+
+    splitfTable.find_element(By.CLASS_NAME,"downloadIconPositioning").click()
 
     fileNameVersion = driver.find_element(By.TAG_NAME,'h1').text
 
@@ -190,6 +197,5 @@ def downloadFDroid(downloadLink):
 
 
 import sys
-print(sys.argv[1:-1])
-print(sys.argv[-1])
-mainScrape(sys.argv[1:-1],sys.argv[-1])
+
+mainScrape(sys.argv[1],sys.argv[2:-1],sys.argv[-1])
