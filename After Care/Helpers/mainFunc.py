@@ -13,14 +13,14 @@ def searchApp(jsonFileLocation,appName):
     with open(jsonFileLocation + '/../appsLinkDict.json', 'r') as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
-        for app,details in apps.items():
+        for app, details in apps.items():
             if app == appName:
                 return {
                     "Category": category,
                     "App": app,
-                    "URL":details["url"],
+                    "URL": details["url"],
                     "Icon": details["icon"],
-                    "Description": details["Description"]
+                    "Description": details["Description"],
                 }
 
 
@@ -35,12 +35,18 @@ def mainScrape(jsonFileLocation,listOfApps,beta):
             downloadAPKMirror(download,beta)
         elif download.startswith('https://github.com/'):
             downloadGitHub(download)
-        elif download.startswith('https://f-droid.org'):
+        elif download.startswith("https://f-droid.org"):
             downloadFDroid(download)
+        elif download.startswith("https://apt.izzysoft.de/"):
+            downloadIzzySoft(download)
+        elif download.startswith("https://thedise.me/"):
+            downloadTheDise(download)
+        else:  # not supported
+            return
 
 
 def initSelenium():
-    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
+    downloads_folder = os.path.join(os.environ["USERPROFILE"], "Downloads")
     #################Init######################
     local_state = {
         "dns_over_https.mode": "secure",
@@ -49,33 +55,37 @@ def initSelenium():
     options = Options()
     options.add_argument("--headless=new")
     os.getcwd()
-    #download_dir = os.getcwd() + r'\tempks'
 
-
-    prefs = {"profile.default_content_settings.popups": 0,
-             "download.default_directory": downloads_folder,  ### Set the path accordingly
-             "download.prompt_for_download": False,  ## change the downpath accordingly
-             "download.directory_upgrade": True,}
+    prefs = {
+        "profile.default_content_settings.popups": 0,
+        "download.default_directory": downloads_folder,  ### Set the path accordingly
+        "download.prompt_for_download": False,  ## change the downpath accordingly
+        "download.directory_upgrade": True,
+    }
     options.add_experimental_option("prefs", prefs)
 
-    options.add_experimental_option('localState', local_state)
+    options.add_experimental_option("localState", local_state)
     options.add_argument("--disable-usb-keyboard-detect")
     driver = webdriver.Chrome(options=options)
     return driver
 
+
 def downloadGitHub(downloadLink):
     driver = initSelenium()
-    #driver.manage().timeouts().implicitlyWait()
+    # driver.manage().timeouts().implicitlyWait()
     driver.get(downloadLink)
     driver.execute_script(f"window.scrollTo(0, 800);")
     time.sleep(1)
-    downloadHREF = driver.find_element(By.PARTIAL_LINK_TEXT,"apk").get_attribute("href")
-    fileNameVersion = downloadHREF.split('/')[-1]
+    downloadHREF = driver.find_element(By.PARTIAL_LINK_TEXT, "apk").get_attribute(
+        "href"
+    )
+    fileNameVersion = downloadHREF.split("/")[-1]
     session = requests.Session()
     response = session.get(downloadHREF)
-    saveFile(fileNameVersion,response,driver)
+    saveFile(fileNameVersion, response, driver)
 
-def downloadAPKMirror(downloadLink,beta):
+
+def downloadAPKMirror(downloadLink, beta):
 
     driver = initSelenium()
 
@@ -84,7 +94,10 @@ def downloadAPKMirror(downloadLink,beta):
 
     time.sleep(1)
 
-    driver.execute_script("arguments[0].scrollIntoView();",driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]"))
+    driver.execute_script(
+        "arguments[0].scrollIntoView();",
+        driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div[5]"),
+    )
 
     time.sleep(2)
     # try:
@@ -114,53 +127,116 @@ def downloadAPKMirror(downloadLink,beta):
 
     splitfTable.find_element(By.CLASS_NAME,"downloadIconPositioning").click()
 
-    fileNameVersion = driver.find_element(By.TAG_NAME,'h1').text
+    fileNameVersion = driver.find_element(By.TAG_NAME, "h1").text
 
-    if(os.path.exists(os.path.join('apks',fileNameVersion))):
+    if os.path.exists(os.path.join("apks", fileNameVersion)):
         print(fileNameVersion + "already downloaded skipping...")
 
     driver.execute_script(f"window.scrollTo(0, 800);")
-    driver.find_element(By.XPATH, '//*[@id="downloads"]/div/div/div[2]/div[5]/a').click()
+    driver.find_element(
+        By.XPATH, '//*[@id="downloads"]/div/div/div[2]/div[5]/a'
+    ).click()
     driver.execute_script(f"window.scrollTo(0, 300);")
     try:
         driver.find_element(By.XPATH, '//*[@id="file"]/div[1]/div[2]/div/a').click()
     except:
-        driver.find_element(By.XPATH,'/html/body/div[2]/div/div[1]/article/div[2]/div[3]/div[1]/div[2]/div[2]/div/a').click()
+        driver.find_element(
+            By.XPATH,
+            "/html/body/div[2]/div/div[1]/article/div[2]/div[3]/div[1]/div[2]/div[2]/div/a",
+        ).click()
 
-
-    downloadlink = driver.find_element(By.XPATH,
-                                       '/html/body/div[2]/div/div[1]/article/div[2]/div/div/div[1]/p[2]/span/a').get_attribute(
-        "href")
+    downloadlink = driver.find_element(
+        By.XPATH,
+        "/html/body/div[2]/div/div[1]/article/div[2]/div/div/div[1]/p[2]/span/a",
+    ).get_attribute("href")
     cookies = driver.get_cookies()
     session = requests.Session()
-    headers = {
-        'User-Agent': seleniumUserAgent
-    }
+    headers = {"User-Agent": seleniumUserAgent}
     session.headers.update(headers)
     for cookie in cookies:
-        session.cookies.set(cookie['name'], cookie['value'])
+        session.cookies.set(cookie["name"], cookie["value"])
     response = session.get(downloadlink)
-    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
-    latest_download = max(os.listdir(downloads_folder), key=lambda x: os.path.getctime(os.path.join(downloads_folder, x)))
-    saveFile(fileNameVersion + ".apk",response,driver)
+    downloads_folder = os.path.join(os.environ["USERPROFILE"], "Downloads")
+    latest_download = max(
+        os.listdir(downloads_folder),
+        key=lambda x: os.path.getctime(os.path.join(downloads_folder, x)),
+    )
+    saveFile(fileNameVersion + ".apk", response, driver)
     os.remove(os.path.join(downloads_folder, latest_download))
     # Close the WebDriver session when done
 
 
-def saveFile(fileNameVersion,response,driver):
-    #check if response is succeful and only then continue
+def downloadIzzySoft(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
+
+    fileNameVersion = driver.find_element(By.TAG_NAME, "h2").text
+    fileNameVersion += (
+        "_"
+        + driver.find_element(
+            By.XPATH, "/html/body/div[1]/div[2]/table/tbody/tr[8]/td[2]"
+        ).text
+    )
+
+    if os.path.exists(os.path.join("apks", fileNameVersion)):
+        print(fileNameVersion + "already downloaded skipping...")
+
+    downloadlink = driver.find_element(
+        By.XPATH, "/html/body/div[1]/div[4]/center/a[1]"
+    ).get_attribute("href")
+    cookies = driver.get_cookies()
+    session = requests.Session()
+    headers = {"User-Agent": seleniumUserAgent}
+    session = requests.Session()
+    response = session.get(downloadlink)
+    saveFile(fileNameVersion + ".apk", response, driver)
+
+
+def downloadTheDise(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
+
+    fileNameVersion = driver.find_element(
+        By.XPATH, "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a"
+    ).text
+
+    if os.path.exists(os.path.join("apks", fileNameVersion)):
+        print(fileNameVersion + "already downloaded skipping...")
+
+    downloadlink = driver.find_element(
+        By.XPATH, "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a"
+    ).get_attribute("href")
+    cookies = driver.get_cookies()
+    session = requests.Session()
+    headers = {"User-Agent": seleniumUserAgent}
+    session = requests.Session()
+    response = session.get(downloadlink)
+    saveFile(fileNameVersion + ".apk", response, driver)
+
+
+def saveFile(fileNameVersion, response, driver):
+    # check if response is succeful and only then continue
     if fileNameVersion == "app-release.apk":
-        fileNameVersion = driver.find_element(By.XPATH,"""//*[@id="repo-content-pjax-container"]/div/div/div/div[1]/div[1]/div[1]/div[1]/h1""").text + ".apk"
-    downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
-    if not(os.path.exists(downloads_folder+"/AfterCareApks")):
-        os.makedirs(downloads_folder+"/AfterCareApks")
+        fileNameVersion = (
+            driver.find_element(
+                By.XPATH,
+                """//*[@id="repo-content-pjax-container"]/div/div/div/div[1]/div[1]/div[1]/div[1]/h1""",
+            ).text
+            + ".apk"
+        )
+    downloads_folder = os.path.join(os.environ["USERPROFILE"], "Downloads")
+    if not (os.path.exists(downloads_folder + "/AfterCareApks")):
+        os.makedirs(downloads_folder + "/AfterCareApks")
     local_file_path = downloads_folder + "/AfterCareApks/" + fileNameVersion
 
-    with open(local_file_path, 'wb') as file:
+    with open(local_file_path, "wb") as file:
         file.write(response.content)
     driver.quit()
 
-    print('successfully downloaded ' + fileNameVersion)
+    print("successfully downloaded " + fileNameVersion)
+
 
 # def searchForApp(nameOfApp):
 #     for website in data['websites']:
@@ -175,16 +251,26 @@ def downloadFDroid(downloadLink):
     driver = initSelenium()
     driver.get(downloadLink)
     if downloadLink == "https://f-droid.org/":
-        downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute("href")
+        downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute(
+            "href"
+        )
         appName = "Fdroid"
         appVersion = ".apk"
     else:
-        downloadHref = driver.find_element(By.CLASS_NAME,"package-version-download").find_element(By.TAG_NAME,"a").get_attribute("href")
-        appName = driver.find_element(By.CLASS_NAME,"package-name").text
-        appVersion = driver.find_element(By.CLASS_NAME,"package-version-header").find_element(By.TAG_NAME, "a").get_attribute("name")
+        downloadHref = (
+            driver.find_element(By.CLASS_NAME, "package-version-download")
+            .find_element(By.TAG_NAME, "a")
+            .get_attribute("href")
+        )
+        appName = driver.find_element(By.CLASS_NAME, "package-name").text
+        appVersion = (
+            driver.find_element(By.CLASS_NAME, "package-version-header")
+            .find_element(By.TAG_NAME, "a")
+            .get_attribute("name")
+        )
     session = requests.Session()
     response = session.get(downloadHref)
-    saveFile(appName + appVersion,response,driver)
+    saveFile(appName + appVersion, response, driver)
 
 
 # def testing():
@@ -193,7 +279,7 @@ def downloadFDroid(downloadLink):
 #         for app, details in apps.items():
 #             listOfApps.append(app)
 #     beta = True
-    # mainScrape(listOfApps[4:],beta)
+# mainScrape(listOfApps[4:],beta)
 
 
 import sys

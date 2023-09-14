@@ -135,11 +135,6 @@
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5cf95ae8c3143.png&w=96&h=96&q=100",
       "Description": "WhatsApp is a centralized instant messaging application."
     },
-    "Infinity-For-Reddit": {
-      "url": "https://f-droid.org/packages/ml.docilealligator.infinityforreddit/",
-      "icon": "https://f-droid.org/repo/ml.docilealligator.infinityforreddit/en-US/icon_k3rHUumkceuBhQzl7CBHaIMfJn_o1lRDPP4ldA3I7Zw=.png",
-      "Description": "Infinity is a beautiful, feature-rich app that offers a smooth Reddit browsing experience."
-    },
     "Telegram": {
       "url": "https://www.apkmirror.com/apk/telegram-fz-llc/telegram/",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F06%2F5cf876afcd188.png&w=96&h=96&q=100",
@@ -202,12 +197,12 @@
   },
   "Anime": {
     "Ani-yomi": {
-      "url": "https://aniyomi.org/download/",
+      "url": "https://github.com/aniyomiorg/aniyomi/releases/latest",
       "icon": "https://github.com/aniyomiorg/aniyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Unofficial fork of Tachiyomi for anime."
     },
     "Tach-iyomi": {
-      "url": "https://tachiyomi.org/download/",
+      "url": "https://github.com/tachiyomiorg/tachiyomi/releases/latest",
       "icon": "https://github.com/tachiyomiorg/tachiyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Free and open source manga reader for Android."
     },
