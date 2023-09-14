@@ -8,9 +8,11 @@ import json
 import urllib
 import sys
 
+APP_DEFAULT_FOLDER_TO_DOWNLOAD = "/AfterCareApks/"
+
 
 def searchApp(jsonFileLocation, appName):
-    with open(jsonFileLocation + "/../appsLinkDict.json", "r") as f:
+    with open(jsonFileLocation + "/appsLinkDict.json", "r") as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app, details in apps.items():
@@ -35,12 +37,14 @@ def mainScrape(jsonFileLocation, listOfApps, beta):
             downloadAPKMirror(download, beta)
         elif download.startswith("https://github.com/"):
             downloadGitHub(download)
-        elif download.startswith("https://f-droid.org"):
+        elif download.startswith("https://f-droid.org/"):
             downloadFDroid(download)
         elif download.startswith("https://apt.izzysoft.de/"):
             downloadIzzySoft(download)
         elif download.startswith("https://thedise.me/"):
             downloadTheDise(download)
+        elif download.startswith("https://telegram.org/"):
+            downloadTelegram(download)
         else:  # not supported
             return
 
@@ -50,7 +54,7 @@ def initSelenium():
     #################Init######################
     local_state = {
         "dns_over_https.mode": "secure",
-        "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",
+        "dns_over_https.templates": "https://dns.adguard-dns.com/dns-query",  # To avoid Ads
     }
     options = Options()
     options.add_argument("--headless=new")
@@ -58,8 +62,8 @@ def initSelenium():
 
     prefs = {
         "profile.default_content_settings.popups": 0,
-        "download.default_directory": downloads_folder,  ### Set the path accordingly
-        "download.prompt_for_download": False,  ## change the downpath accordingly
+        "download.default_directory": downloads_folder,  # Set the path accordingly
+        "download.prompt_for_download": False,  # change the download path accordingly
         "download.directory_upgrade": True,
     }
     options.add_experimental_option("prefs", prefs)
@@ -68,21 +72,6 @@ def initSelenium():
     options.add_argument("--disable-usb-keyboard-detect")
     driver = webdriver.Chrome(options=options)
     return driver
-
-
-def downloadGitHub(downloadLink):
-    driver = initSelenium()
-    # driver.manage().timeouts().implicitlyWait()
-    driver.get(downloadLink)
-    driver.execute_script(f"window.scrollTo(0, 800);")
-    time.sleep(1)
-    downloadHREF = driver.find_element(By.PARTIAL_LINK_TEXT, "apk").get_attribute(
-        "href"
-    )
-    fileNameVersion = downloadHREF.split("/")[-1]
-    session = requests.Session()
-    response = session.get(downloadHREF)
-    saveFile(fileNameVersion, response, driver)
 
 
 def downloadAPKMirror(downloadLink, beta):
@@ -170,11 +159,51 @@ def downloadAPKMirror(downloadLink, beta):
     # Close the WebDriver session when done
 
 
+def downloadGitHub(downloadLink):
+    driver = initSelenium()
+    # driver.manage().timeouts().implicitlyWait()
+    driver.get(downloadLink)
+    driver.execute_script(f"window.scrollTo(0, 800);")
+    time.sleep(1)
+    downloadHREF = driver.find_element(By.PARTIAL_LINK_TEXT, "apk").get_attribute(
+        "href"
+    )
+    fileNameVersion = downloadHREF.split("/")[-1]
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        session = requests.Session()
+        response = session.get(downloadHREF)
+        saveFile(fileNameVersion, response, driver)
+
+
+def downloadFDroid(downloadLink):
+    driver = initSelenium()
+    if downloadLink == "https://f-droid.org/F-Droid.apk":
+        appName = "F"
+        appVersion = "-Droid"
+        downloadHref = downloadLink
+    else:
+        driver.get(downloadLink)
+        downloadHref = (
+            driver.find_element(By.CLASS_NAME, "package-version-download")
+            .find_element(By.TAG_NAME, "a")
+            .get_attribute("href")
+        )
+        appName = driver.find_element(By.CLASS_NAME, "package-name").text
+        appVersion = (
+            driver.find_element(By.CLASS_NAME, "package-version-header")
+            .find_element(By.TAG_NAME, "a")
+            .get_attribute("name")
+        )
+    fileNameVersion = appName + appVersion + ".apk"
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        session = requests.Session()
+        response = session.get(downloadHref)
+        saveFile(fileNameVersion, response, driver)
+
+
 def downloadIzzySoft(downloadLink):
     driver = initSelenium()
     driver.get(downloadLink)
-    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
-
     fileNameVersion = driver.find_element(By.TAG_NAME, "h2").text
     fileNameVersion += (
         "_"
@@ -182,46 +211,59 @@ def downloadIzzySoft(downloadLink):
             By.XPATH, "/html/body/div[1]/div[2]/table/tbody/tr[8]/td[2]"
         ).text
     )
+    fileNameVersion += ".apk"
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        downloadlink = driver.find_element(
+            By.XPATH, "/html/body/div[1]/div[4]/center/a[1]"
+        ).get_attribute("href")
+        session = requests.Session()
+        response = session.get(downloadlink)
+        saveFile(fileNameVersion, response, driver)
 
-    if os.path.exists(os.path.join("apks", fileNameVersion)):
-        print(fileNameVersion + "already downloaded skipping...")
 
-    downloadlink = driver.find_element(
-        By.XPATH, "/html/body/div[1]/div[4]/center/a[1]"
-    ).get_attribute("href")
-    cookies = driver.get_cookies()
-    session = requests.Session()
-    headers = {"User-Agent": seleniumUserAgent}
-    session = requests.Session()
-    response = session.get(downloadlink)
-    saveFile(fileNameVersion + ".apk", response, driver)
+def downloadTelegram(downloadLink):
+    # TODO: make this better # note that driver isn't used
+    driver = initSelenium()
+    fileNameVersion = "Telegram.apk"
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        session = requests.Session()
+        response = session.get(downloadLink)
+        saveFile(fileNameVersion, response, driver)
 
 
 def downloadTheDise(downloadLink):
     driver = initSelenium()
     driver.get(downloadLink)
-    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
-
     fileNameVersion = driver.find_element(
         By.XPATH, "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a"
     ).text
+    fileNameVersion += ".apk"
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        downloadlink = driver.find_element(
+            By.XPATH,
+            "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a",
+        ).get_attribute("href")
+        session = requests.Session()
+        response = session.get(downloadlink)
+        saveFile(fileNameVersion, response, driver)
 
-    if os.path.exists(os.path.join("apks", fileNameVersion)):
-        print(fileNameVersion + "already downloaded skipping...")
 
-    downloadlink = driver.find_element(
-        By.XPATH, "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a"
-    ).get_attribute("href")
-    cookies = driver.get_cookies()
-    session = requests.Session()
-    headers = {"User-Agent": seleniumUserAgent}
-    session = requests.Session()
-    response = session.get(downloadlink)
-    saveFile(fileNameVersion + ".apk", response, driver)
+def isFileNeedsToBeDownloaded(fileNameToCheck):
+    downloads_folder = (
+        os.path.join(os.environ["USERPROFILE"], "Downloads")
+        + APP_DEFAULT_FOLDER_TO_DOWNLOAD
+    )
+    # No such folder or no such file - Download it
+    if (not (os.path.exists(downloads_folder))) or (
+        not (os.path.isfile(downloads_folder + fileNameToCheck))
+    ):
+        return True
+    print(f"No need to download {fileNameToCheck} - Skip!")
+    return False  # Else: file found - Do not download
 
 
 def saveFile(fileNameVersion, response, driver):
-    # check if response is succeful and only then continue
+    # check if response is successful and only then continue
     if fileNameVersion == "app-release.apk":
         fileNameVersion = (
             driver.find_element(
@@ -230,10 +272,13 @@ def saveFile(fileNameVersion, response, driver):
             ).text
             + ".apk"
         )
-    downloads_folder = os.path.join(os.environ["USERPROFILE"], "Downloads")
-    if not (os.path.exists(downloads_folder + "/AfterCareApks")):
-        os.makedirs(downloads_folder + "/AfterCareApks")
-    local_file_path = downloads_folder + "/AfterCareApks/" + fileNameVersion
+    downloads_folder = (
+        os.path.join(os.environ["USERPROFILE"], "Downloads")
+        + APP_DEFAULT_FOLDER_TO_DOWNLOAD
+    )
+    if not (os.path.exists(downloads_folder)):
+        os.makedirs(downloads_folder + APP_DEFAULT_FOLDER_TO_DOWNLOAD[-1])
+    local_file_path = downloads_folder + fileNameVersion
 
     with open(local_file_path, "wb") as file:
         file.write(response.content)
@@ -251,32 +296,6 @@ def saveFile(fileNameVersion, response, driver):
 #             continue
 
 
-def downloadFDroid(downloadLink):
-    driver = initSelenium()
-    driver.get(downloadLink)
-    if downloadLink == "https://f-droid.org/":
-        downloadHref = driver.find_element(By.ID, "fdroid-download").get_attribute(
-            "href"
-        )
-        appName = "Fdroid"
-        appVersion = ".apk"
-    else:
-        downloadHref = (
-            driver.find_element(By.CLASS_NAME, "package-version-download")
-            .find_element(By.TAG_NAME, "a")
-            .get_attribute("href")
-        )
-        appName = driver.find_element(By.CLASS_NAME, "package-name").text
-        appVersion = (
-            driver.find_element(By.CLASS_NAME, "package-version-header")
-            .find_element(By.TAG_NAME, "a")
-            .get_attribute("name")
-        )
-    session = requests.Session()
-    response = session.get(downloadHref)
-    saveFile(appName + appVersion + ".apk", response, driver)
-
-
 # def testing():
 #     listOfApps = []
 #     for category, apps in appsLinkDict.items():
@@ -285,7 +304,5 @@ def downloadFDroid(downloadLink):
 #     beta = True
 # mainScrape(listOfApps[4:],beta)
 
-
-import sys
-
 mainScrape(sys.argv[1], sys.argv[2:-1], sys.argv[-1])
+# mainScrape(r"<<PATH_TO_REPO>>\After Care\Helpers", ["F-droid", "Telegram"], True)
