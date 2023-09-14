@@ -18,6 +18,7 @@ internal class ApkInstallerClass
         if (isRemoteInstall)
         {
             folderPathForLocalFiles = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\Downloads\AfterCareApks\";
+            NotificationAndToasts.SendNotificationStartDownload();
             if (!downloadFilesUsingPythonScript(selectedApkFiles))
             {
                 // TODO: add notification for failed download or something
@@ -87,9 +88,6 @@ internal class ApkInstallerClass
             if (File.Exists(pythonScriptPath))
             {              
                 var downloadBetaIfPresent = "True"; // beta - true or false
-
-
-                
 
                 ProcessStartInfo startInfo = new ProcessStartInfo
                 {
