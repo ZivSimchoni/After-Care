@@ -270,7 +270,7 @@ def downloadFDroid(downloadLink):
         )
     session = requests.Session()
     response = session.get(downloadHref)
-    saveFile(appName + appVersion, response, driver)
+    saveFile(appName + appVersion + ".apk", response, driver)
 
 
 # def testing():

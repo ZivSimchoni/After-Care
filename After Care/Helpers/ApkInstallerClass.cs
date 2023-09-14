@@ -47,7 +47,7 @@ internal class ApkInstallerClass
                 ProcessStartInfo adbProcessInfo = new ProcessStartInfo
                 {
                     FileName = adbPath,
-                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFileName}\"",
+                    Arguments = $"install -r \"{folderPathForLocalFiles}\\{apkFileName.Replace("\r\n","")}",
                     RedirectStandardOutput = true,
                     RedirectStandardError = true,
                     UseShellExecute = false,
