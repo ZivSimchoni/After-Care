@@ -61,7 +61,7 @@ public sealed partial class MainPage : Page
             ViewModel.InstallApkFiles();
         }
     }
-    
+
     public bool isCheckBoxSelected()
     {
         // Check if any checkbox is selected

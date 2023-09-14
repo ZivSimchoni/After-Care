@@ -7,8 +7,9 @@
     xmlns:local1="using:After_Care.ViewModels"
     mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
+        <ScrollViewer HorizontalScrollMode="Disabled" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left">
             <StackPanel.Resources>
                 <Style TargetType="TextBlock">
                     <Setter Property="HorizontalAlignment" Value="Stretch" />
@@ -18,38 +19,57 @@
                 </Style>
             </StackPanel.Resources>
 
-            <!-- Use a GridView with ItemsWrapGrid for Categories -->
-            <GridView ItemsSource="{x:Bind ViewModel.Categories}" HorizontalAlignment="Left">
-                <GridView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid Orientation="Horizontal" VerticalAlignment="Top" />
-                    </ItemsPanelTemplate>
-                </GridView.ItemsPanel>
-                <GridView.ItemTemplate>
-                    <DataTemplate x:DataType="local1:Category">
-                        <StackPanel>
-                            <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="Bold" Margin="5" />
-                            <!-- Remove HorizontalAlignment and VerticalAlignment from this StackPanel -->
-                            <ListView ItemsSource="{x:Bind Apps}" Padding="5" Margin="5">
-                                <ListView.ItemTemplate>
-                                    <DataTemplate x:DataType="local1:CheckBoxItem">
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
-                                            <Image Source="{x:Bind Icon}" Width="Auto" Height="16" Margin="5" />
-                                            <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </StackPanel>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
+                <!-- Use a GridView with ItemsWrapGrid for Categories -->
+                <GridView ItemsSource="{x:Bind ViewModel.Categories}" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal" VerticalAlignment="Top" />
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:DataType="local1:Category">
+                            <StackPanel MinWidth="200" MinHeight="340">
+                                <TextBlock Text="{x:Bind Name}" FontSize="16" FontWeight="Bold" Margin="5" />
+                                <ListView ItemsSource="{x:Bind Apps}" Padding="5" Margin="5">
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                            <Setter Property="VerticalContentAlignment" Value="Top" />
+                                            <Setter Property="Padding" Value="5" />
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="local1:CheckBoxItem">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top">
+                                                <Image Source="{x:Bind Icon}" Width="Auto" Height="16" Margin="5" />
+                                                <CheckBox Content="{x:Bind Name}" IsChecked="{x:Bind IsChecked, Mode=TwoWay}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
 
-            <StackPanel Name="StackDeviceDetails" Orientation="Horizontal" Padding="20" HorizontalAlignment="Center">
-                <!-- Your other controls here -->
+                <StackPanel  Name="StackDeviceDetails" Orientation="Horizontal" Padding="20" HorizontalAlignment="Center">
+                        <StackPanel.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                <Setter Property="VerticalAlignment" Value="Stretch" />
+                                <Setter Property="Padding" Value="5" />
+                            </Style>
+                        </StackPanel.Resources>
+                        <TextBlock  Text="Model:"></TextBlock>
+                        <TextBox Name="textDeviceModel"   IsReadOnly="True" Text="{x:Bind Path=ViewModel.Device.Model, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock   Text="Code Name:"></TextBlock>
+                        <TextBox Name="textDeviceName"   IsReadOnly="True" Text="{x:Bind Path=ViewModel.Device.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock    Text="Device's Architecture:"></TextBlock>
+                        <TextBox Name="textDeviceArchitecture" AutomationProperties.Name="simple ToggleSwitch"  IsReadOnly="True" Text="{x:Bind Path=ViewModel.Device.Architecture, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                    </StackPanel>
+
+                <Button Background="Green" Padding="50,20" Margin="0,20" Click="Button_Click" FontSize="22" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Center" />
             </StackPanel>
-
-            <Button Background="Green" Padding="50,20" Margin="0,20" Click="Button_Click" FontSize="22" Content="Install" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>
