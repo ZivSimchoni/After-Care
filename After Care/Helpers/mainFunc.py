@@ -37,7 +37,12 @@ def mainScrape(listOfApps,beta):
             downloadGitHub(download)
         elif download.startswith('https://f-droid.org'):
             downloadFDroid(download)
-
+        elif download.startswith('https://apt.izzysoft.de/'):
+            downloadIzzySoft(download)
+        elif download.startswith('https://thedise.me/'):
+            downloadTheDise(download)
+        else:  # not supported
+            return
 
 def initSelenium():
     downloads_folder = os.path.join(os.environ['USERPROFILE'], 'Downloads')
@@ -49,8 +54,6 @@ def initSelenium():
     options = Options()
     options.add_argument("--headless=new")
     os.getcwd()
-    #download_dir = os.getcwd() + r'\tempks'
-
 
     prefs = {"profile.default_content_settings.popups": 0,
              "download.default_directory": downloads_folder,  ### Set the path accordingly
@@ -139,6 +142,50 @@ def downloadAPKMirror(downloadLink,beta):
     os.remove(os.path.join(downloads_folder, latest_download))
     # Close the WebDriver session when done
 
+def downloadIzzySoft(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
+
+    fileNameVersion = driver.find_element(By.TAG_NAME, 'h2').text
+    fileNameVersion += "_" + driver.find_element(By.XPATH, "/html/body/div[1]/div[2]/table/tbody/tr[8]/td[2]").text
+
+    if (os.path.exists(os.path.join('apks', fileNameVersion))):
+        print(fileNameVersion + "already downloaded skipping...")
+
+    downloadlink = driver.find_element(By.XPATH,
+                                       '/html/body/div[1]/div[4]/center/a[1]').get_attribute(
+        "href")
+    cookies = driver.get_cookies()
+    session = requests.Session()
+    headers = {
+        'User-Agent': seleniumUserAgent
+    }
+    session = requests.Session()
+    response = session.get(downloadlink)
+    saveFile(fileNameVersion + ".apk",response,driver)
+
+def downloadTheDise(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    seleniumUserAgent = driver.execute_script("return navigator.userAgent")
+
+    fileNameVersion = driver.find_element(By.XPATH, "/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a").text
+
+    if (os.path.exists(os.path.join('apks', fileNameVersion))):
+        print(fileNameVersion + "already downloaded skipping...")
+
+    downloadlink = driver.find_element(By.XPATH,
+                                       '/html/body/div[2]/main/div[2]/div[1]/div/table/tbody/tr[1]/th[1]/a').get_attribute(
+        "href")
+    cookies = driver.get_cookies()
+    session = requests.Session()
+    headers = {
+        'User-Agent': seleniumUserAgent
+    }
+    session = requests.Session()
+    response = session.get(downloadlink)
+    saveFile(fileNameVersion + ".apk",response,driver)
 
 def saveFile(fileNameVersion,response,driver):
     #check if response is succeful and only then continue
@@ -188,8 +235,6 @@ def downloadFDroid(downloadLink):
 #     beta = True
     # mainScrape(listOfApps[4:],beta)
 
-
-import sys
-print(sys.argv[1:-1])
-print(sys.argv[-1])
+# print(sys.argv[1:-1])
+# print(sys.argv[-1])
 mainScrape(sys.argv[1:-1],sys.argv[-1])
