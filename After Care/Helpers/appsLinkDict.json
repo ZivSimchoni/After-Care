@@ -203,22 +203,22 @@
   "Anime": {
     "Ani-yomi": {
       "url": "https://aniyomi.org/download/",
-      "icon": "URL",
+      "icon": "https://github.com/aniyomiorg/aniyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Unofficial fork of Tachiyomi for anime."
     },
     "Tach-iyomi": {
       "url": "https://tachiyomi.org/download/",
-      "icon": "URL",
+      "icon": "https://github.com/tachiyomiorg/tachiyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Free and open source manga reader for Android."
     },
     "Moe-list": {
       "url": "https://apt.izzysoft.de/fdroid/index/apk/com.axiel7.moelist",
-      "icon": "URL",
+      "icon": "https://apt.izzysoft.de/fdroid/repo/com.axiel7.moelist/en-US/icon.png",
       "Description": "MoeList is an unofficial MAL (MyAnimeList) client."
     },
     "Sai-kou": {
       "url": "https://github.com/saikou-app/saikou/releases/latest",
-      "icon": "URL",
+      "icon": "https://avatars.githubusercontent.com/u/94010054?s=48&v=4",
       "Description": "An Android Anilist client, which lets you stream & download Anime & Manga."
     }
   }
