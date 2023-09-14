@@ -21,6 +21,11 @@ internal class NotificationAndToasts
         SendNotificationToast(ResourceExtensions.GetLocalized("NoDevice"), ResourceExtensions.GetLocalized("ConnectDevice"));
     }
 
+    public static void SendNotificationStartDownload()
+    {
+        SendNotificationToast(ResourceExtensions.GetLocalized("StartDownloadTitle"), ResourceExtensions.GetLocalized("StartDownloadMessage"));
+    }
+
     public static void SendNotificationNoApkFound()
     {
         SendNotificationToast(ResourceExtensions.GetLocalized("NoApps"), ResourceExtensions.GetLocalized("CannotInstall"));

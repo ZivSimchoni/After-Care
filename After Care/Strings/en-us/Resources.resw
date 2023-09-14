@@ -218,4 +218,10 @@
   <data name="StartInstallationTitle" xml:space="preserve">
     <value>Starting Installation</value>
   </data>
+  <data name="StartDownloadMessage" xml:space="preserve">
+    <value>Please wait while we're handling stuff for you in the background.</value>
+  </data>
+  <data name="StartDownloadTitle" xml:space="preserve">
+    <value>Download Started!</value>
+  </data>
 </root>
