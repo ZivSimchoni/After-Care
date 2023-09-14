@@ -202,12 +202,12 @@
   },
   "Anime": {
     "Ani-yomi": {
-      "url": "https://aniyomi.org/download/",
+      "url": "https://github.com/aniyomiorg/aniyomi/releases/latest",
       "icon": "https://github.com/aniyomiorg/aniyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Unofficial fork of Tachiyomi for anime."
     },
     "Tach-iyomi": {
-      "url": "https://tachiyomi.org/download/",
+      "url": "https://github.com/tachiyomiorg/tachiyomi/releases/latest",
       "icon": "https://github.com/tachiyomiorg/tachiyomi/blob/master/app/src/main/ic_launcher-web.png?raw=true",
       "Description": "Free and open source manga reader for Android."
     },
