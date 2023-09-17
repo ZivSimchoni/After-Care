@@ -73,7 +73,6 @@ def initSelenium():
         "download.directory_upgrade": True,
     }
     options.add_experimental_option("prefs", prefs)
-
     options.add_experimental_option("localState", local_state)
     options.add_argument("--disable-usb-keyboard-detect")
     driver = webdriver.Chrome(options=options)
@@ -81,20 +80,15 @@ def initSelenium():
 
 
 def downloadAPKMirror(downloadLink, beta):
-
     driver = initSelenium()
-
     driver.get(downloadLink)
     seleniumUserAgent = driver.execute_script("return navigator.userAgent")
-
     time.sleep(1)
-
     driver.execute_script(
         "arguments[0].scrollIntoView();",
         driver.find_element(By.XPATH, "/html/body/div[2]/div/div[1]/div[5]"),
     )
-
-    time.sleep(2)
+    time.sleep(3)
     # try:
     #     listOfAvailVersions = driver.find_element(By.XPATH,"/html/body/div[2]/div/div[1]/div[5]").find_elements(By.TAG_NAME,'h5')
     # except:
@@ -123,12 +117,13 @@ def downloadAPKMirror(downloadLink, beta):
             By.XPATH, "/html/body/div[2]/div/div[1]/div[6]"
         )
         splitfTable = divOfAllVersions.find_element(By.CLASS_NAME, "appRow")
-
+    time.sleep(1)
     splitfTable.find_element(By.CLASS_NAME, "downloadIconPositioning").click()
 
     fileNameVersion = driver.find_element(By.TAG_NAME, "h1").text
 
     if not isFileNeedsToBeDownloaded(fileNameVersion):
+        driver.quit()
         return
 
     driver.execute_script(f"window.scrollTo(0, 800);")
@@ -351,9 +346,9 @@ def saveFile(fileNameVersion, response, driver):
 
 mainScrape(sys.argv[1], sys.argv[2:-1], sys.argv[-1])
 # mainScrape(
-#     r"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\\",
+#     r"C:\Users\Ziv S\source\repos\AfterCare\After Care\bin\x64\Debug\net7.0-windows10.0.19041.0\win10-x64\AppX\Helpers\mainFunc.py",
 #     [
-#         "MEGA",
+#         "Firefox",
 #     ],
 #     True,
 # )
