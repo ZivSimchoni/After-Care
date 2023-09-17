@@ -12,7 +12,7 @@ APP_DEFAULT_FOLDER_TO_DOWNLOAD = "/AfterCareApks/"
 
 
 def searchApp(jsonFileLocation, appName):
-    with open(jsonFileLocation + "/appsLinkDict.json", "r") as f:
+    with open(jsonFileLocation + "/../appsLinkDict.json", "r") as f:
         appsLinkDict = json.load(f)
     for category, apps in appsLinkDict.items():
         for app, details in apps.items():
@@ -303,7 +303,7 @@ def isFileNeedsToBeDownloaded(fileNameToCheck):
         not (os.path.isfile(downloads_folder + fileNameToCheck))
     ):
         return True
-    print(f"No need to download {fileNameToCheck} - Skip!")
+    # print(f"No need to download {fileNameToCheck} - Skip!")
     return False  # Else: file found - Do not download
 
 
