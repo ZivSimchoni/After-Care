@@ -22,6 +22,7 @@ internal class ApkInstallerClass
             if (!downloadFilesUsingPythonScript(selectedApkFiles))
             {
                 // TODO: add notification for failed download or something
+                NotificationAndToasts.SendNotificationApkFailed();
                 return;
             }
             if (appDownloadedSuccefully.Contains("successfully"))
@@ -61,6 +62,7 @@ internal class ApkInstallerClass
                     var output = await adbProcess.StandardOutput.ReadToEndAsync();
                     await adbProcess.WaitForExitAsync();
                 }
+                //NotificationAndToasts.SendNotificationApkInstalled(apkFileName); // notify for each apk installed
                 processedFiles++;
             }));
             // TODO: maybe add 3rd notification for failed installs and show the failed APKs or the amount of failed APKs

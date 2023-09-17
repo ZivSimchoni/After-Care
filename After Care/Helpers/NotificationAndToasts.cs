@@ -41,6 +41,11 @@ internal class NotificationAndToasts
         SendNotificationToast(ResourceExtensions.GetLocalized("InstallationComplete"), ResourceExtensions.GetLocalized("ApkInstallationCompleted"));
     }
 
+    public static void SendNotificationApkInstalled(string nameOfInstalledAPK)
+    {
+        SendNotificationToast(ResourceExtensions.GetLocalized("InstallationComplete"), nameOfInstalledAPK + " " + ResourceExtensions.GetLocalized("ApkInstallationCompleted"));
+    }
+
     public static void SendNotificationApkInstalled(int apkInstalledCounter)
     {
         SendNotificationToast(ResourceExtensions.GetLocalized("InstallationComplete"), apkInstalledCounter + ResourceExtensions.GetLocalized("ApkInstallationCompletedWithCounter"));
