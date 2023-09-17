@@ -45,6 +45,12 @@ def mainScrape(jsonFileLocation, listOfApps, beta):
             downloadTheDise(download)
         elif download.startswith("https://telegram.org/"):
             downloadTelegram(download)
+        elif download.startswith("https://proton.me/"):
+            downloadProtonMail(download)
+        elif download.startswith("https://store.steampowered.com/"):
+            downloadSteam(download)
+        elif download.startswith("https://mixplorer.com/"):
+            downloadMixPlorer(download)
         else:  # not supported
             return
 
@@ -122,8 +128,8 @@ def downloadAPKMirror(downloadLink, beta):
 
     fileNameVersion = driver.find_element(By.TAG_NAME, "h1").text
 
-    if os.path.exists(os.path.join("apks", fileNameVersion)):
-        print(fileNameVersion + "already downloaded skipping...")
+    if not isFileNeedsToBeDownloaded(fileNameVersion):
+        return
 
     driver.execute_script(f"window.scrollTo(0, 800);")
     driver.find_element(
@@ -221,10 +227,49 @@ def downloadIzzySoft(downloadLink):
         saveFile(fileNameVersion, response, driver)
 
 
+def downloadSteam(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    driver.execute_script(
+        "arguments[0].scrollIntoView();",
+        driver.find_element(By.CLASS_NAME, "mobile_footer_text"),
+    )
+    downloadlink = driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[7]/div[6]/div[1]/div[2]/div[3]/div/div[3]/div[2]/a",
+    ).get_attribute("href")
+    fileNameVersion = downloadlink.split("/")[-1]
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        session = requests.Session()
+        response = session.get(downloadlink)
+        saveFile(fileNameVersion, response, driver)
+
+
+def downloadMixPlorer(downloadLink):
+    driver = initSelenium()
+    driver.get(downloadLink)
+    fileNameVersion = driver.find_element(By.CLASS_NAME, "file").text
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        downloadlink = driver.find_element(By.CLASS_NAME, "apk").get_attribute("href")
+        session = requests.Session()
+        response = session.get(downloadlink)
+        saveFile(fileNameVersion, response, driver)
+
+
 def downloadTelegram(downloadLink):
     # TODO: make this better # note that driver isn't used
     driver = initSelenium()
     fileNameVersion = "Telegram.apk"
+    if isFileNeedsToBeDownloaded(fileNameVersion):
+        session = requests.Session()
+        response = session.get(downloadLink)
+        saveFile(fileNameVersion, response, driver)
+
+
+def downloadProtonMail(downloadLink):
+    # TODO: make this better # note that driver isn't used
+    driver = initSelenium()
+    fileNameVersion = "ProtonMail-Android.apk"
     if isFileNeedsToBeDownloaded(fileNameVersion):
         session = requests.Session()
         response = session.get(downloadLink)
@@ -305,4 +350,10 @@ def saveFile(fileNameVersion, response, driver):
 # mainScrape(listOfApps[4:],beta)
 
 mainScrape(sys.argv[1], sys.argv[2:-1], sys.argv[-1])
-# mainScrape(r"<<PATH_TO_REPO>>\After Care\Helpers", ["F-droid", "Telegram"], True)
+# mainScrape(
+#     r"C:\Users\Ziv S\source\repos\AfterCare\After Care\Helpers\\",
+#     [
+#         "MEGA",
+#     ],
+#     True,
+# )

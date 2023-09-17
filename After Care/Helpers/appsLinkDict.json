@@ -23,7 +23,7 @@
   },
   "Email-Clients": {
     "ProtonMail": {
-      "url": "https://www.apkmirror.com/apk/proton-technologies-ag/protonmail-encrypted-email/",
+      "url": "https://proton.me/download/MailAndroid/ProtonMail-Android.apk",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F07%2F37%2F64c0f62c0f114_ch.protonmail.android.png&w=96&h=96&q=100",
       "Description": "Proton Mail is an end-to-end encrypted email service."
     },
@@ -33,14 +33,14 @@
       "Description": "Fully featured, privacy oriented email app for Android."
     },
     "K9": {
-      "url": "https://www.apkmirror.com/apk/k-9-dog-walkers/k-9-mail/",
+      "url": "https://github.com/thundernest/k-9/releases/latest",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2021%2F07%2F10%2F60f9e3788b9f6.png&w=96&h=96&q=100",
       "Description": "K-9 Mail is free and open source email client for Android."
     }
   },
   "Files-And-Utilities": {
     "Mixplorer": {
-      "url": "https://www.apkmirror.com/apk/hootan-parsa/mixplorer-hootanparsa/",
+      "url": "https://mixplorer.com/beta/",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F04%2FMiXplorer_round.png&w=96&h=96&q=100",
       "Description": "MiXplorer is the best Android file explorer."
     },
@@ -65,7 +65,7 @@
       "Description": "QR and barcode scanner with all the features you need. "
     },
     "Steam": {
-      "url": "https://www.apkmirror.com/apk/valve-corporation/steam",
+      "url": "https://store.steampowered.com/mobile#mobile_section",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F07%2F37%2F64beb8e0f2430_com.valvesoftware.android.steam.community.png&w=96&h=96&q=100",
       "Description": "With the free Steam Mobile App, you can take Steam with you anywhere."
     },
@@ -88,11 +88,6 @@
     }
   },
   "Media-And-Social": {
-    "Youtube": {
-      "url": "https://www.apkmirror.com/apk/google-inc/youtube/",
-      "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2019%2F03%2F5c8308e836b90.png&w=96&h=96&q=100",
-      "Description": "Youtube is an online video sharing and social media platform."
-    },
     "NewPipe": {
       "url": "https://f-droid.org/packages/org.schabi.newpipe/",
       "icon": "https://f-droid.org/repo/org.schabi.newpipe/en-US/icon_OHy4y1W-fJCNhHHOBCM9V_cxZNJJgbcNkB-x7UDTY9Q=.png",
@@ -114,7 +109,7 @@
       "Description": "Poweramp is a powerful music player for Android."
     },
     "VLC": {
-      "url": "https://www.apkmirror.com/apk/videolabs/vlc/",
+      "url": "https://f-droid.org/en/packages/org.videolan.vlc/",
       "icon": "https://www.apkmirror.com/wp-content/themes/APKMirror/ap_resize/ap_resize.php?src=https%3A%2F%2Fdownloadr2.apkmirror.com%2Fwp-content%2Fuploads%2F2023%2F02%2F82%2F63f3f65c178b8.png&w=96&h=96&q=100",
       "Description": "VLC is FOSS cross-platform multimedia player and framework."
     }
