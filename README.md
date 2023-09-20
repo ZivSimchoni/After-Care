@@ -1,6 +1,6 @@
-﻿![AfterCareLogo](./After%20Care/Assets/AfterCare.png "Logo")
+﻿
 
-# After Care
+# ![AfterCareLogo](./After%20Care/Assets/AfterCare.png "Logo")fter Care
 
 After Care allows you to install one or many APK using ADB without much hassle, you just plug the Android device to your computer, select the apps from a list and hit the installation button.
 
