@@ -24,8 +24,6 @@ public class CheckBoxItem
 
 public partial class MainViewModel : ObservableRecipient, INotifyPropertyChanged
 {
-    public event PropertyChangedEventHandler PropertyChanged;
-
     public AndroidDevice Device { get; set; } = new AndroidDevice();
 
     public ObservableCollection<Category> Categories { get; set; } = new ObservableCollection<Category>();
