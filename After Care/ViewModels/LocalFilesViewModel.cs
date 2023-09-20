@@ -14,10 +14,7 @@ public partial class LocalFilesViewModel : ObservableRecipient, INotifyPropertyC
     private ObservableCollection<CheckBox> _apkFiles;
     public ObservableCollection<CheckBox> ApkFiles
     {
-        get
-        {
-            return _apkFiles;
-        }
+        get => _apkFiles;
         set
         {
             _apkFiles = value;
