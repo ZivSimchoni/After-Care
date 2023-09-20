@@ -1,9 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
 using After_Care.Contracts.Services;
 using After_Care.Contracts.ViewModels;
 using After_Care.Helpers;
-
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 

@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 
-using Windows.ApplicationModel.Chat;
 using Windows.Storage;
 
 namespace After_Care.Helpers;

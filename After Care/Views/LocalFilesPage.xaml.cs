@@ -1,15 +1,10 @@
 ﻿using After_Care.Helpers;
 using After_Care.ViewModels;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage.AccessCache;
-
 using Windows.Storage.Pickers;
-
 using Windows.Storage;
-using Microsoft.Windows.AppNotifications.Builder;
-using Microsoft.Windows.AppNotifications;
 
 namespace After_Care.Views;
 
@@ -64,7 +59,7 @@ public sealed partial class LocalFilesPage : Page
     async Task GetApkFilesFromFolder(string folderPath)
     {
         var apkFiles = Directory.EnumerateFiles(folderPath, "*.apk").ToList();
-        int totalFiles = apkFiles.Count;
+        var totalFiles = apkFiles.Count;
         if (totalFiles > 0)
         {
             textApkFilesName.Text = totalFiles + ResourceExtensions.GetLocalized("FolderWithApk");

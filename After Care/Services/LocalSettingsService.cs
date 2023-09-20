@@ -3,10 +3,7 @@ using After_Care.Core.Contracts.Services;
 using After_Care.Core.Helpers;
 using After_Care.Helpers;
 using After_Care.Models;
-
 using Microsoft.Extensions.Options;
-
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace After_Care.Services;

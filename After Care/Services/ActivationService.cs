@@ -1,7 +1,6 @@
 ﻿using After_Care.Activation;
 using After_Care.Contracts.Services;
 using After_Care.Views;
-
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
