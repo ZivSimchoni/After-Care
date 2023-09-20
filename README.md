@@ -8,7 +8,7 @@ After Care allows you to install one or many APK using ADB without much hassle, 
 
 This project assumes you have the following:
 
-1. Your are using Windows 10 or newer.
+1. Your are using Windows 10 or newer. (V10.0.19041.0 or later)
 2. Python 3.10 or newer installed on your computer.
 3. **Authorized** your Android device to use ADB (USB Debugging) on your PC & Connected your device **via USB cable**. (currently only USB is supported)
 4. Enough available space on:
