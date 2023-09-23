@@ -29,6 +29,7 @@ This project assumes you have the following:
 
 ### Disclaimer
 
-    This project is for educational purposes only. Do not use it for illegal purposes. We are not responsible for any damage caused by this project. Use it at your own risk.
+    Please note that this project is still in development.
+    This project is for educational purposes only. Do not use it for illegal/commercial purposes. We are not responsible for any damage caused by this project. Use it at your own risk.
     If you are a developer of any of the app/s listed in this project, and you want your app to be removed, please contact us.
     If you are an owner of any of the sites/logos used in this project, and you want your site/logo to be removed, please contact us.
